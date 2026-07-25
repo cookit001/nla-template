@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 export const metadata = {
@@ -17,6 +18,7 @@ export default function RootLayout({
         <main className="w-full max-w-lg min-h-screen flex flex-col px-4 py-6">
           {children}
         </main>
+        <Analytics />
       </body>
     </html>
   );
