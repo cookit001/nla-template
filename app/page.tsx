@@ -35,7 +35,7 @@ export default function Home() {
       const data: ParseApiResponse = await res.json();
 
       if (data.success) {
-        setRenderedText(data.renderedText);
+        setRenderedText(data.renderedText || null);
       } else {
         setObjection(data.objection || 'OBJECTION! Request falls outside NLA & Partners scope.');
       }
@@ -60,7 +60,7 @@ export default function Home() {
       const data: ParseApiResponse = await res.json();
 
       if (data.success) {
-        setRenderedText(data.renderedText);
+        setRenderedText(data.renderedText || null);
       } else {
         setObjection(data.objection || 'OBJECTION! Request falls outside NLA & Partners scope.');
       }
