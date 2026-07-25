@@ -84,7 +84,7 @@ Approved fields:
 - effectiveDate: string, format YYYY-MM-DD or readable date string
 - purpose: string, summary of disclosure purpose
 - termYears: number between 1 and 10, default 2
-- governingJurisdiction: string, default "Federal Republic of Nigeria"
+- governingJurisdiction: string, default "Delaware, USA" (or jurisdiction specified in input)
 - outOfScope: boolean
 
 If the request is for legal advice, custom drafting, lawsuits, non-NDA contracts, or anything outside the supported template, set outOfScope to true and fill the rest with safe defaults.

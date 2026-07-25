@@ -7,7 +7,7 @@ export const NdaInputSchema = z.object({
   effectiveDate: z.string().min(1, 'Effective Date is required'),
   purpose: z.string().min(1, 'Purpose of Disclosure is required'),
   termYears: z.number().int().min(1).max(10).default(2),
-  governingJurisdiction: z.string().default('Federal Republic of Nigeria'),
+  governingJurisdiction: z.string().default('Delaware, USA'),
 });
 
 export type NdaInputs = z.infer<typeof NdaInputSchema>;
