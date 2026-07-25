@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <circle cx="100" cy="100" r="90" fill="#0F172A" stroke="#D4AF37" stroke-width="4" />
+  <circle cx="100" cy="100" r="82" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="4 2" />
+  <text x="100" y="45" fill="#D4AF37" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="2">
+    NLA &amp; PARTNERS
+  </text>
+  <path d="M70 100 L100 70 L130 100 L100 130 Z" fill="none" stroke="#D4AF37" stroke-width="2" />
+  <circle cx="100" cy="100" r="10" fill="#D4AF37" />
+  <text x="100" y="160" fill="#D4AF37" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle" letter-spacing="1.5">
+    IN BOILERPLATE WE TRUST
+  </text>
+</svg>
