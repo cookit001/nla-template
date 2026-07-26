@@ -2,7 +2,7 @@ import { GoogleGenerativeAI, SchemaType, ResponseSchema } from '@google/generati
 import { NdaInputSchema, NdaInputs } from '../types';
 import { inspectPromptSafety, REJECTION_OBJECTION_MESSAGE } from './guardrails';
 
-function getGeminiClient(): GoogleGenerativeAI | null {
+function getGenerativeClient(): GoogleGenerativeAI | null {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey || apiKey === 'dummy-key-for-build' || apiKey.trim() === '') {
     return null;
@@ -49,13 +49,13 @@ export async function parseNdaRequestFromAi(userInput: string): Promise<{
     };
   }
 
-  const client = getGeminiClient();
+  const client = getGenerativeClient();
   if (!client) {
     return {
       success: false,
       objection:
-        'OBJECTION! Gemini API key is missing or unconfigured. Please add a valid GEMINI_API_KEY to .env.local or use the Structured Inputs tab.',
-      error: 'GEMINI_API_KEY is not configured.',
+        'OBJECTION! NLA AI Extraction Service key is unconfigured. Please use the Form Wizard tab or configure the environment.',
+      error: 'AI extraction API key is missing.',
     };
   }
 
@@ -106,7 +106,7 @@ ${userInput}
       return {
         success: false,
         objection: REJECTION_FALLBACK,
-        error: 'Request flagged as out of scope by Gemini.',
+        error: 'Request flagged as out of scope by NLA AI safety filter.',
       };
     }
 
@@ -132,7 +132,7 @@ ${userInput}
   } catch (err: any) {
     return {
       success: false,
-      objection: REJECTION_OBJECTION_MESSAGE,
+      objection: REJECTION_FALLBACK,
       error: err?.message || 'AI extraction failed',
     };
   }

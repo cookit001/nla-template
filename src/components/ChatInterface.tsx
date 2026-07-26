@@ -10,7 +10,7 @@ export function ChatInterface() {
     {
       id: 'welcome-1',
       sender: 'ai',
-      text: "Welcome to NLA & Partners. I'm your deterministic AI legal assistant powered by Gemini 2.5 Flash.\n\nTell me your deal details in plain English, and I will extract the parameters into an immutable, SHA-256 verified boilerplate document across global jurisdictions (Delaware, UK, Singapore, Nigeria, EU, etc.).",
+      text: "Welcome to NLA & Partners. I'm your deterministic AI legal assistant.\n\nTell me your deal details in plain English, and I will extract the parameters into an immutable, SHA-256 verified boilerplate document across global jurisdictions (Delaware, UK, Singapore, Nigeria, EU, etc.).",
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     },
   ]);
@@ -93,7 +93,7 @@ export function ChatInterface() {
       const errorMsg: ChatMessage = {
         id: `ai-${Date.now()}`,
         sender: 'ai',
-        text: 'OBJECTION! Network connection or execution error while connecting to Gemini AI.',
+        text: 'OBJECTION! Network connection or processing error.',
         isObjection: true,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       };
@@ -141,7 +141,7 @@ export function ChatInterface() {
       {
         id: 'welcome-1',
         sender: 'ai',
-        text: "Welcome to NLA & Partners. I'm your deterministic AI legal assistant powered by Gemini 2.5 Flash.\n\nTell me your deal details in plain English, and I will extract the parameters into an immutable, SHA-256 verified boilerplate document across global jurisdictions (Delaware, UK, Singapore, Nigeria, EU, etc.).",
+        text: "Welcome to NLA & Partners. I'm your deterministic AI legal assistant.\n\nTell me your deal details in plain English, and I will extract the parameters into an immutable, SHA-256 verified boilerplate document across global jurisdictions (Delaware, UK, Singapore, Nigeria, EU, etc.).",
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       },
     ]);
@@ -159,10 +159,10 @@ export function ChatInterface() {
             <div className="flex items-center space-x-1.5">
               <span className="text-xs sm:text-sm font-bold text-slate-100">NLA Legal AI Assistant</span>
               <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[9px] font-semibold px-1.5 py-0.5 rounded">
-                Gemini 2.5 Flash
+                NLA Intelligence v2.5
               </span>
             </div>
-            <span className="text-[10px] text-slate-400">Global Boilerplate & AI Parameter Extractor</span>
+            <span className="text-[10px] text-slate-400">Global Boilerplate & Parameter Extractor</span>
           </div>
         </div>
 
@@ -287,7 +287,7 @@ export function ChatInterface() {
               <div className="w-2 h-2 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '0ms' }}></div>
               <div className="w-2 h-2 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '150ms' }}></div>
               <div className="w-2 h-2 rounded-full bg-amber-400 animate-bounce" style={{ animationDelay: '300ms' }}></div>
-              <span className="text-xs text-slate-400 ml-1">Gemini AI extracting parameters...</span>
+              <span className="text-xs text-slate-400 ml-1">NLA AI extracting parameters...</span>
             </div>
           </div>
         )}

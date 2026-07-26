@@ -96,7 +96,7 @@ export default function Home() {
         </h1>
         
         <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
-          Conversational ChatGPT / Gemini AI Legal Assistant & Deterministic Generator for Farcaster, Base, X, Mobile App, and Web.
+          Conversational AI Legal Assistant & Deterministic Generator for Farcaster, Base, X, Mobile App, and Web.
         </p>
 
         {/* Primary App Mode Switcher */}
@@ -110,7 +110,7 @@ export default function Home() {
             }`}
           >
             <MessageSquare className="w-3.5 h-3.5" />
-            <span>AI Chat Assistant</span>
+            <span>AI Assistant</span>
           </button>
 
           <button

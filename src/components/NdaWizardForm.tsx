@@ -31,11 +31,11 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
       prompt: 'Draft a 3-year NDA between Acme Ventures Ltd and Nexus Tech Corp starting today for M&A discussions under Delaware, USA law.',
     },
     {
-      label: '⚡ Fintech API Integration',
+      label: '⚡ Fintech API 2-Yr NDA',
       prompt: 'Draft a 2-year non-disclosure agreement between PayDirect Ltd and OpenBanking Inc to share API integration docs governed by England & Wales law.',
     },
     {
-      label: '🛡️ Web3 Protocol NDA',
+      label: '🛡️ Web3 Grant Singapore NDA',
       prompt: 'Draft a 5-year mutual NDA between 9Realms Studios and Base Ecosystem Fund for strategic grant evaluation under Singapore law.',
     },
   ];
@@ -95,7 +95,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           }`}
         >
           <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>AI Quick Extractor</span>
+          <span>NLA Natural Extractor</span>
         </button>
       </div>
 
@@ -229,16 +229,16 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           </button>
         </form>
       ) : (
-        /* Tab 2: AI Quick Extractor */
+        /* Tab 2: AI Natural Extractor */
         <form onSubmit={handleAiSubmit} className="space-y-4">
           {/* Instructions */}
           <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 text-xs text-slate-400 leading-relaxed space-y-1">
             <div className="flex items-center space-x-1.5 text-amber-400 font-semibold">
               <HelpCircle className="w-3.5 h-3.5" />
-              <span>Natural Language AI Extraction</span>
+              <span>NLA Natural Language Parameter Extractor</span>
             </div>
             <p>
-              Paste details in plain text. Gemini 2.5 Flash extracts parameters strictly into the pre-approved NDA template across global jurisdictions.
+              Paste deal details in plain text. NLA Intelligence extracts parameters strictly into the pre-approved NDA template across global jurisdictions.
             </p>
           </div>
 
@@ -285,7 +285,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                <span>Extracting Parameters with Gemini AI...</span>
+                <span>Extracting Parameters with NLA AI...</span>
               </span>
             ) : (
               <>
