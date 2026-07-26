@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata, Viewport } from 'next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -115,6 +116,7 @@ export default function RootLayout({
         <main className="w-full max-w-lg min-h-screen flex flex-col px-4 sm:px-6 py-5 sm:py-8 z-10 relative overflow-hidden">
           {children}
         </main>
+        <SpeedInsights />
       </body>
     </html>
   );
