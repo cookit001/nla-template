@@ -20,6 +20,16 @@ export type ParseApiResponse = {
   reason?: string;
 };
 
+export type ChatMessage = {
+  id: string;
+  sender: 'user' | 'ai';
+  text: string;
+  timestamp: string;
+  renderedText?: string;
+  data?: NdaInputs;
+  isObjection?: boolean;
+};
+
 export type AuditLogEntry = {
   timestamp: string;
   eventType: 'NDA_GENERATED' | 'OBJECTION_TRIGGERED' | 'VALIDATION_FAILED';
