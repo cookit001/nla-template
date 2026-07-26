@@ -11,9 +11,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://nla-template.vercel.app'),
-  title: 'NLA Templates — Fast Standardized Legal Templates',
-  description:
-    'Fast, standardized, SHA-256 verified Non-Disclosure Agreements in seconds. Multi-jurisdiction support for Delaware, UK, Singapore, Nigeria, EU & more. Built for web3 teams, startups, and enterprise on Farcaster, Base, X, and the open web.',
+  title: 'NLA Templates',
+  description: 'Fast, standardized legal templates for creators, founders, freelancers, and crypto-native teams.',
   keywords: [
     'NLA Templates',
     'legal templates',
@@ -58,23 +57,21 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://nla-template.vercel.app',
     siteName: 'NLA Templates',
-    title: 'NLA Templates — Fast Standardized Legal Templates',
-    description:
-      'Fast, standardized, SHA-256 verified Non-Disclosure Agreements in seconds. Multi-jurisdiction support for Delaware, UK, Singapore, Nigeria, EU & more.',
+    title: 'NLA Templates',
+    description: 'Fast, standardized legal templates for creators, founders, freelancers, and crypto-native teams.',
     images: [
       {
         url: '/og-image.svg',
         width: 1200,
         height: 630,
-        alt: 'NLA Templates — Fast Standardized Legal Templates',
+        alt: 'NLA Templates',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'NLA Templates — Fast Standardized Legal Templates',
-    description:
-      'Fast, standardized, SHA-256 verified NDAs in seconds. Multi-jurisdiction. Built for web3 teams, startups & enterprise.',
+    title: 'NLA Templates',
+    description: 'Fast, standardized legal templates for creators, founders, freelancers, and crypto-native teams.',
     images: ['/og-image.svg'],
     creator: '@9realms',
   },
@@ -89,6 +86,7 @@ export const metadata: Metadata = {
     canonical: 'https://nla-template.vercel.app',
   },
   other: {
+    'base:app_id': '6a656dc7281b6db318994c51',
     'fc:frame': 'vNext',
     'fc:frame:image': 'https://nla-template.vercel.app/og-image.svg',
     'fc:frame:button:1': 'Open NLA Templates',
