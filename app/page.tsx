@@ -7,6 +7,8 @@ import { NdaWizardForm } from '../src/components/NdaWizardForm';
 import { DocumentPreview } from '../src/components/DocumentPreview';
 import { DisclaimerBanner } from '../src/components/DisclaimerBanner';
 import { GeminiSidebar } from '../src/components/GeminiSidebar';
+import { FloatingPromptBar } from '../src/components/FloatingPromptBar';
+import { PlusAttachmentSheet } from '../src/components/PlusAttachmentSheet';
 import { fillNdaTemplate } from '../src/templates/nda';
 import { Seal2DIcon, Menu2DIcon, Sparkles2DIcon } from '../src/components/HandcraftedIcons';
 
@@ -19,7 +21,12 @@ export default function Home() {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [activeDocType, setActiveDocType] = useState<LegalDocumentType>('nda');
+  const [draftingMode, setDraftingMode] = useState<'structured' | 'ai'>('ai');
+  const [plusMenuOpen, setPlusMenuOpen] = useState(false);
   const [forceTosOpen, setForceTosOpen] = useState(false);
+
+  const [promptInput, setPromptInput] = useState('');
+  const [aiUsesLeft, setAiUsesLeft] = useState<number>(3);
 
   useEffect(() => {
     try {
@@ -36,6 +43,10 @@ export default function Home() {
     } else {
       document.documentElement.classList.add('dark');
     }
+
+    const todayKey = `nla_ai_uses_${new Date().toISOString().split('T')[0]}`;
+    const usedCount = Number(localStorage.getItem(todayKey) || '0');
+    setAiUsesLeft(Math.max(0, 3 - usedCount));
   }, []);
 
   const toggleTheme = () => {
@@ -71,15 +82,27 @@ export default function Home() {
     }
   };
 
-  const handleNaturalTextSubmit = async (prompt: string) => {
+  const handleNaturalTextSubmit = async (promptText: string) => {
+    if (!promptText.trim()) return;
     setLoading(true);
     setObjection(null);
+
+    if (aiUsesLeft <= 0) {
+      alert('Daily AI limit reached (3/3 generations used today). Please use the Form Wizard tab for unlimited document generation!');
+      setLoading(false);
+      return;
+    }
+
+    const todayKey = `nla_ai_uses_${new Date().toISOString().split('T')[0]}`;
+    const usedCount = Number(localStorage.getItem(todayKey) || '0');
+    localStorage.setItem(todayKey, String(usedCount + 1));
+    setAiUsesLeft(Math.max(0, 3 - (usedCount + 1)));
 
     try {
       const res = await fetch('/api/parse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode: 'ai', prompt }),
+        body: JSON.stringify({ mode: 'ai', prompt: promptText }),
       });
       const data: ParseApiResponse = await res.json();
 
@@ -95,30 +118,42 @@ export default function Home() {
     }
   };
 
+  const handlePromptBarSubmit = () => {
+    if (draftingMode === 'ai') {
+      handleNaturalTextSubmit(promptInput);
+    } else {
+      // In Form Wizard mode, open wizard modal/sheet if fields are needed
+      setPlusMenuOpen(true);
+    }
+  };
+
   return (
-    <div className="flex min-h-screen w-full bg-[#131314] text-slate-100 font-sans">
-      {/* Google Gemini Left Sidebar */}
+    <div className="flex min-h-screen w-full bg-[#131314] text-slate-100 font-sans overflow-x-hidden">
+      {/* 1. Sidebar Drawer (Hamburger Menu) */}
       <GeminiSidebar
         collapsed={sidebarCollapsed}
         onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
         mobileOpen={mobileSidebarOpen}
         onCloseMobile={() => setMobileSidebarOpen(false)}
         activeDocType={activeDocType}
-        onSelectDocType={(type) => setActiveDocType(type)}
+        onSelectDocType={(type) => {
+          setActiveDocType(type);
+          setRenderedText(null);
+        }}
         onNewDocument={() => setRenderedText(null)}
         onOpenTos={() => setForceTosOpen(true)}
         theme={theme}
         onToggleTheme={toggleTheme}
       />
 
-      {/* Main Workspace Canvas */}
-      <div className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
-        {/* Top Navbar */}
-        <header className="sticky top-0 z-20 bg-[#131314]/90 backdrop-blur-md border-b border-slate-800/60 px-4 py-3 flex items-center justify-between no-print">
+      {/* Main Chat Stream Container */}
+      <div className="flex-1 flex flex-col min-h-screen relative overflow-y-auto">
+        {/* Mobile Hamburger Header */}
+        <header className="sm:hidden sticky top-0 z-20 bg-[#131314]/90 backdrop-blur-md border-b border-slate-800/60 px-4 py-3 flex items-center justify-between no-print">
           <div className="flex items-center space-x-3">
             <button
               onClick={() => setMobileSidebarOpen(true)}
-              className="sm:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-colors"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-colors"
             >
               <Menu2DIcon className="w-5 h-5" />
             </button>
@@ -128,43 +163,45 @@ export default function Home() {
               <span className="text-sm font-bold tracking-tight text-slate-100" style={{ fontFamily: 'Georgia, serif' }}>
                 NLA Templates
               </span>
-              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/30 text-[#d4af37]">
-                Gemini v2.5 Engine
-              </span>
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setRenderedText(null)}
-              className="text-xs font-semibold text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-full bg-[#1e1f20] border border-slate-800 transition-colors"
-            >
-              Reset Canvas
-            </button>
-          </div>
+          <button
+            onClick={() => setPlusMenuOpen(true)}
+            className="text-xs font-bold text-[#d4af37] px-2.5 py-1 rounded-full bg-[#1e1f20] border border-slate-800"
+          >
+            + Attach Tools
+          </button>
         </header>
 
-        {/* Main Content Body */}
-        <main className="flex-1 w-full max-w-4xl mx-auto p-4 sm:p-6 space-y-5">
-          {!renderedText && (
-            <div className="text-center pt-2 space-y-1.5 no-print">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#1e1f20] border border-slate-800 text-[11px] font-medium text-[#d4af37]">
-                <Sparkles2DIcon className="w-3.5 h-3.5" />
+        {/* 2. Main Chat View (Empty State & Stream) */}
+        <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-32 flex flex-col justify-center">
+          {!renderedText ? (
+            /* Empty State: Vertically Centered Title & Stream */
+            <div className="text-center my-auto space-y-4 py-12 animate-fadeIn">
+              <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1e1f20] border border-slate-800 text-xs font-semibold text-[#d4af37] shadow-sm">
+                <Sparkles2DIcon className="w-4 h-4" />
                 <span>In Boilerplate We Trust</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-100">
+
+              <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-slate-100 leading-tight">
                 What legal document can I help you draft today?
               </h1>
-              <p className="text-xs text-slate-400 max-w-md mx-auto">
-                Select a verified template from the Gemini sidebar or fill in deal parameters below.
+
+              <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
+                Describe your deal in the prompt bar below or tap <span className="text-[#d4af37] font-bold">+</span> to attach template tools ({activeDocType.toUpperCase()}).
               </p>
+            </div>
+          ) : (
+            /* Generated Conversational Document Stream */
+            <div className="w-full space-y-5 animate-fadeIn pt-2">
+              <DocumentPreview renderedText={renderedText} onReset={() => setRenderedText(null)} />
             </div>
           )}
 
-          {renderedText ? (
-            <DocumentPreview renderedText={renderedText} onReset={() => setRenderedText(null)} />
-          ) : (
-            <div className="space-y-4">
+          {/* Form Wizard Config Modal when in Form Wizard mode & no document is rendered */}
+          {!renderedText && draftingMode === 'structured' && (
+            <div className="pt-4">
               <NdaWizardForm
                 onSubmitStructured={handleStructuredSubmit}
                 onSubmitNaturalText={handleNaturalTextSubmit}
@@ -172,10 +209,33 @@ export default function Home() {
                 objection={objection}
                 initialDocType={activeDocType}
               />
-              <DisclaimerBanner forceOpen={forceTosOpen} onClose={() => setForceTosOpen(false)} />
             </div>
           )}
+
+          <DisclaimerBanner forceOpen={forceTosOpen} onClose={() => setForceTosOpen(false)} />
         </main>
+
+        {/* 3. Floating Pill Prompt Bar */}
+        <FloatingPromptBar
+          promptText={promptInput}
+          onChangePrompt={(val) => setPromptInput(val)}
+          onSubmit={handlePromptBarSubmit}
+          loading={loading}
+          onOpenPlusMenu={() => setPlusMenuOpen(true)}
+          activeDocType={activeDocType}
+          mode={draftingMode}
+          aiUsesLeft={aiUsesLeft}
+        />
+
+        {/* 4. '+' Attachment Sheet Menu */}
+        <PlusAttachmentSheet
+          isOpen={plusMenuOpen}
+          onClose={() => setPlusMenuOpen(false)}
+          mode={draftingMode}
+          onSelectMode={(m) => setDraftingMode(m)}
+          activeDocType={activeDocType}
+          onSelectDocType={(t) => setActiveDocType(t)}
+        />
       </div>
     </div>
   );

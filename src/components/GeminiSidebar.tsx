@@ -12,7 +12,7 @@ import {
   Scale2DIcon,
   Clock2DIcon,
 } from './HandcraftedIcons';
-import { Sun, Moon, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { Sun, Moon, ChevronLeft, ChevronRight, X, Sparkles } from 'lucide-react';
 import { LegalDocumentType } from '../types';
 
 interface Props {
@@ -57,9 +57,17 @@ export function GeminiSidebar({
           <div className="flex items-center space-x-2.5">
             <Seal2DIcon className="w-7 h-7 drop-shadow-sm shrink-0" />
             {!collapsed && (
-              <span className="text-sm font-bold tracking-tight text-slate-100 whitespace-nowrap" style={{ fontFamily: 'Georgia, serif' }}>
-                NLA Templates
-              </span>
+              <div>
+                <div className="text-sm font-bold tracking-tight text-slate-100 whitespace-nowrap" style={{ fontFamily: 'Georgia, serif' }}>
+                  NLA Templates
+                </div>
+                <div className="flex items-center space-x-1 mt-0.5">
+                  <Sparkles className="w-3 h-3 text-[#d4af37]" />
+                  <span className="text-[9px] font-bold uppercase tracking-wider text-[#d4af37]">
+                    Gemini v2.5 Engine
+                  </span>
+                </div>
+              </div>
             )}
           </div>
 
@@ -91,11 +99,11 @@ export function GeminiSidebar({
           {!collapsed && <span className="text-xs whitespace-nowrap">New Document</span>}
         </button>
 
-        {/* Template Catalog / History Section */}
+        {/* Chat History & Legal Template Catalog */}
         <div className="space-y-1 pt-2">
           {!collapsed && (
             <div className="px-2 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
-              <span>Legal Templates</span>
+              <span>Chat History & Tools</span>
               <Clock2DIcon className="w-3 h-3 text-slate-500" />
             </div>
           )}
@@ -128,7 +136,7 @@ export function GeminiSidebar({
         </div>
       </div>
 
-      {/* Bottom Section */}
+      {/* Bottom Footer Section */}
       <div className="space-y-2 pt-3 border-t border-slate-800/60">
         {/* TOS Trigger Link */}
         <button
