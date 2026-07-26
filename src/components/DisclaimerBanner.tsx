@@ -3,10 +3,10 @@ import { AlertTriangle } from 'lucide-react';
 
 export function DisclaimerBanner() {
   return (
-    <div className="bg-[#0c1019] border border-slate-800/40 rounded-lg p-3 text-xs flex items-start gap-2.5">
+    <div className="bg-[#0c1019] border border-slate-500/40 rounded-lg p-3 text-xs flex items-start gap-2.5">
       <AlertTriangle className="w-4 h-4 text-[#d4af37] shrink-0 mt-0.5" />
       <div className="space-y-0.5">
-        <div className="font-semibold text-slate-300 text-[11px]">
+        <div className="font-gothic text-slate-300 text-[11px]">
           Not Legal Advice
         </div>
         <p className="text-slate-500 leading-relaxed text-[11px]">

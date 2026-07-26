@@ -135,9 +135,9 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="text-center text-[10px] text-slate-600 pt-4 no-print space-y-1 border-t border-slate-900/60">
+      <footer className="text-center text-[10px] text-slate-300 pt-4 no-print space-y-1 border-t border-slate-600/60">
         <div>© 2026 9Realms Studios · NLA & Partners</div>
-        <div className="text-slate-700">
+        <div className="text-slate-300">
           Farcaster · Base · X · Mobile · Web
         </div>
       </footer>
