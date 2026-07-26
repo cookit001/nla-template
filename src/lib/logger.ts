@@ -1,7 +1,7 @@
 export interface AuditLogEntry {
   timestamp: string;
-  eventType: 'NDA_GENERATED' | 'OBJECTION_TRIGGERED' | 'VALIDATION_FAILED';
-  documentType: 'nda';
+  eventType: 'DOCUMENT_GENERATED' | 'NDA_GENERATED' | 'OBJECTION_TRIGGERED' | 'VALIDATION_FAILED' | 'RATE_LIMIT_REACHED';
+  documentType: string;
   partyLengthA: number;
   partyLengthB: number;
   ipHash?: string;

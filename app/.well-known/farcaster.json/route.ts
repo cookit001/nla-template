@@ -10,11 +10,11 @@ export async function GET() {
     frame: {
       version: "1",
       name: "NLA Templates",
-      iconUrl: "https://nla-template.vercel.app/apple-touch-icon.svg",
+      iconUrl: "https://nla-template.vercel.app/icon.png",
       homeUrl: "https://nla-template.vercel.app",
-      imageUrl: "https://nla-template.vercel.app/og-image.svg",
+      imageUrl: "https://nla-template.vercel.app/og-image.png",
       buttonTitle: "Open NLA Templates",
-      splashImageUrl: "https://nla-template.vercel.app/apple-touch-icon.svg",
+      splashImageUrl: "https://nla-template.vercel.app/splash.png",
       splashBackgroundColor: "#07090e",
       webhookUrl: "https://nla-template.vercel.app/api/webhook"
     }

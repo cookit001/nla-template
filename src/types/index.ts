@@ -1,23 +1,30 @@
 import { z } from 'zod';
 
-export const NdaInputSchema = z.object({
-  documentType: z.literal('nda').default('nda'),
-  partyA: z.string().min(1, 'Disclosing Party Name is required'),
-  partyB: z.string().min(1, 'Receiving Party Name is required'),
+export const LegalDocumentTypeSchema = z.enum(['nda', 'sow', 'advisory', 'contractor', 'safe']);
+export type LegalDocumentType = z.infer<typeof LegalDocumentTypeSchema>;
+
+export const LegalTemplateInputSchema = z.object({
+  documentType: LegalDocumentTypeSchema.default('nda'),
+  partyA: z.string().min(1, 'Party A Name is required'),
+  partyB: z.string().min(1, 'Party B Name is required'),
   effectiveDate: z.string().min(1, 'Effective Date is required'),
-  purpose: z.string().min(1, 'Purpose of Disclosure is required'),
+  purpose: z.string().min(1, 'Scope or Purpose is required'),
   termYears: z.number().int().min(1).max(10).default(2),
   governingJurisdiction: z.string().default('Delaware, USA'),
 });
 
-export type NdaInputs = z.infer<typeof NdaInputSchema>;
+export type LegalTemplateInputs = z.infer<typeof LegalTemplateInputSchema>;
+export type NdaInputs = LegalTemplateInputs;
+
+export const NdaInputSchema = LegalTemplateInputSchema;
 
 export type ParseApiResponse = {
   success: boolean;
-  data?: NdaInputs;
+  data?: LegalTemplateInputs;
   renderedText?: string;
   objection?: string;
   reason?: string;
+  aiGenerationsRemaining?: number;
 };
 
 export type ChatMessage = {
@@ -26,13 +33,13 @@ export type ChatMessage = {
   text: string;
   timestamp: string;
   renderedText?: string;
-  data?: NdaInputs;
+  data?: LegalTemplateInputs;
   isObjection?: boolean;
 };
 
 export type AuditLogEntry = {
   timestamp: string;
-  eventType: 'NDA_GENERATED' | 'OBJECTION_TRIGGERED' | 'VALIDATION_FAILED';
+  eventType: 'DOCUMENT_GENERATED' | 'OBJECTION_TRIGGERED' | 'VALIDATION_FAILED' | 'RATE_LIMIT_REACHED';
   documentType: string;
   partyLengthA: number;
   partyLengthB: number;

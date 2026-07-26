@@ -1,5 +1,5 @@
 import { GoogleGenerativeAI, SchemaType, ResponseSchema } from '@google/generative-ai';
-import { NdaInputSchema, NdaInputs } from '../types';
+import { LegalTemplateInputSchema, LegalTemplateInputs } from '../types';
 import { inspectPromptSafety, REJECTION_OBJECTION_MESSAGE } from './guardrails';
 
 function getGenerativeClient(): GoogleGenerativeAI | null {
@@ -10,11 +10,12 @@ function getGenerativeClient(): GoogleGenerativeAI | null {
   return new GoogleGenerativeAI(apiKey.trim());
 }
 
-const REJECTION_FALLBACK = 'OBJECTION! Request falls outside NLA & Partners scope.';
+const REJECTION_FALLBACK = 'OBJECTION! Request falls outside NLA Templates scope.';
 
-const ndaResponseSchema: ResponseSchema = {
+const legalTemplateResponseSchema: ResponseSchema = {
   type: SchemaType.OBJECT,
   properties: {
+    documentType: { type: SchemaType.STRING },
     partyA: { type: SchemaType.STRING },
     partyB: { type: SchemaType.STRING },
     effectiveDate: { type: SchemaType.STRING },
@@ -24,6 +25,7 @@ const ndaResponseSchema: ResponseSchema = {
     outOfScope: { type: SchemaType.BOOLEAN },
   },
   required: [
+    'documentType',
     'partyA',
     'partyB',
     'effectiveDate',
@@ -36,7 +38,7 @@ const ndaResponseSchema: ResponseSchema = {
 
 export async function parseNdaRequestFromAi(userInput: string): Promise<{
   success: boolean;
-  data?: NdaInputs;
+  data?: LegalTemplateInputs;
   objection?: string;
   error?: string;
 }> {
@@ -54,7 +56,7 @@ export async function parseNdaRequestFromAi(userInput: string): Promise<{
     return {
       success: false,
       objection:
-        'OBJECTION! NLA AI Extraction Service key is unconfigured. Please use the Form Wizard tab or configure the environment.',
+        'OBJECTION! AI Extraction key is unconfigured. Please use the Form Wizard tab for unlimited generation.',
       error: 'AI extraction API key is missing.',
     };
   }
@@ -64,30 +66,34 @@ export async function parseNdaRequestFromAi(userInput: string): Promise<{
       model: 'gemini-2.5-flash',
       generationConfig: {
         responseMimeType: 'application/json',
-        responseSchema: ndaResponseSchema,
+        responseSchema: legalTemplateResponseSchema,
       },
     });
 
     const prompt = `
-You are the NLA & Partners Structured Data Extractor.
+You are the NLA Templates Structured Data Extractor.
 
 Your sole job:
-- Extract approved fields for a standard NDA template from the user's input.
+- Classify and extract approved fields for one of 5 legal templates:
+  1. "nda": Non-Disclosure Agreement
+  2. "sow": Statement of Work / Development Agreement
+  3. "advisory": Web3 Token & Strategic Advisory Agreement
+  4. "contractor": Independent Contractor Agreement
+  5. "safe": SAFE-T (Simple Agreement for Future Tokens/Equity)
 - Return JSON only.
-- Do not provide legal advice.
-- Do not draft custom clauses.
-- Do not modify the template.
+- Do not provide legal advice or write custom clauses.
 
 Approved fields:
+- documentType: "nda" | "sow" | "advisory" | "contractor" | "safe" (default "nda")
 - partyA: string, default "Party A"
 - partyB: string, default "Party B"
-- effectiveDate: string, format YYYY-MM-DD or readable date string
-- purpose: string, summary of disclosure purpose
+- effectiveDate: string, format YYYY-MM-DD or readable date
+- purpose: string, concise scope or purpose summary
 - termYears: number between 1 and 10, default 2
 - governingJurisdiction: string, default "Delaware, USA" (or jurisdiction specified in input)
 - outOfScope: boolean
 
-If the request is for legal advice, custom drafting, lawsuits, non-NDA contracts, or anything outside the supported template, set outOfScope to true and fill the rest with safe defaults.
+If the request asks for lawsuits, criminal defense, custom litigation, or non-template legal advice, set outOfScope to true.
 
 User input:
 ${userInput}
@@ -106,22 +112,26 @@ ${userInput}
       return {
         success: false,
         objection: REJECTION_FALLBACK,
-        error: 'Request flagged as out of scope by NLA AI safety filter.',
+        error: 'Request flagged as out of scope by NLA Templates safety filter.',
       };
     }
 
+    const docType = ['nda', 'sow', 'advisory', 'contractor', 'safe'].includes(parsedJson.documentType?.toLowerCase())
+      ? parsedJson.documentType.toLowerCase()
+      : 'nda';
+
     const normalized = {
       ...parsedJson,
-      documentType: 'nda',
+      documentType: docType,
     };
 
-    const validated = NdaInputSchema.safeParse(normalized);
+    const validated = LegalTemplateInputSchema.safeParse(normalized);
 
     if (!validated.success) {
       return {
         success: false,
         objection: REJECTION_OBJECTION_MESSAGE,
-        error: 'Zod validation failed on model output',
+        error: 'Validation failed on model output',
       };
     }
 
