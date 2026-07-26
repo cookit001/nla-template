@@ -1,12 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <circle cx="100" cy="100" r="90" fill="#0F172A" stroke="#D4AF37" stroke-width="4" />
-  <circle cx="100" cy="100" r="82" fill="none" stroke="#D4AF37" stroke-width="1.5" stroke-dasharray="4 2" />
-  <text x="100" y="45" fill="#D4AF37" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="2">
-    NLA &amp; PARTNERS
-  </text>
-  <path d="M70 100 L100 70 L130 100 L100 130 Z" fill="none" stroke="#D4AF37" stroke-width="2" />
-  <circle cx="100" cy="100" r="10" fill="#D4AF37" />
-  <text x="100" y="160" fill="#D4AF37" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle" letter-spacing="1.5">
-    IN BOILERPLATE WE TRUST
-  </text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <defs>
+    <radialGradient id="sealBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0B0F17"/>
+    </radialGradient>
+    <linearGradient id="goldLinear" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDF6D8"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#997A15"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Outer Ring -->
+  <circle cx="128" cy="128" r="118" fill="url(#sealBg)" stroke="url(#goldLinear)" stroke-width="4"/>
+  <circle cx="128" cy="128" r="110" fill="none" stroke="url(#goldLinear)" stroke-width="1" stroke-dasharray="6 3" opacity="0.7"/>
+
+  <!-- Inner Concentric Guilloche Border Rings -->
+  <circle cx="128" cy="128" r="102" fill="none" stroke="url(#goldLinear)" stroke-width="1.5"/>
+  <circle cx="128" cy="128" r="98" fill="none" stroke="url(#goldLinear)" stroke-width="0.5" opacity="0.5"/>
+
+  <!-- Curved Header Text Arc Placeholder -->
+  <text x="128" y="56" fill="url(#goldLinear)" font-family="Georgia, serif" font-size="13" font-weight="700" text-anchor="middle" letter-spacing="4">NLA TEMPLATES</text>
+
+  <!-- Central Legal Diamond & Monogram -->
+  <path d="M128 72 L164 128 L128 184 L92 128 Z" fill="none" stroke="url(#goldLinear)" stroke-width="2"/>
+  <path d="M128 82 L154 128 L128 174 L102 128 Z" fill="none" stroke="url(#goldLinear)" stroke-width="0.75" opacity="0.6"/>
+
+  <!-- Core Monogram NLA -->
+  <text x="128" y="133" fill="url(#goldLinear)" font-family="Georgia, serif" font-size="22" font-weight="900" text-anchor="middle" letter-spacing="2">NLA</text>
+
+  <!-- Star Accents -->
+  <path d="M72 128 L76 125 L73 130 L77 131 L72 133 L71 138 L69 133 L64 131 L68 130 L66 125 Z" fill="url(#goldLinear)" opacity="0.8"/>
+  <path d="M184 128 L188 125 L185 130 L189 131 L184 133 L183 138 L181 133 L176 131 L180 130 L178 125 Z" fill="url(#goldLinear)" opacity="0.8"/>
+
+  <!-- Bottom Motto Arc -->
+  <text x="128" y="206" fill="url(#goldLinear)" font-family="monospace" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="3">IN BOILERPLATE WE TRUST</text>
 </svg>

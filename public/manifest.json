@@ -1,7 +1,7 @@
 {
   "name": "NLA Templates",
   "short_name": "NLA Templates",
-  "description": "Fast, standardized legal templates — deterministic, multi-jurisdiction, SHA-256 verified NDA generator for startups, web3 teams, and enterprise.",
+  "description": "Fast, standardized legal templates — deterministic, multi-jurisdiction, SHA-256 verified NDA generator.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#07090E",
@@ -9,12 +9,12 @@
   "icons": [
     {
       "src": "/favicon.svg",
-      "sizes": "any",
+      "sizes": "256x256",
       "type": "image/svg+xml"
     },
     {
       "src": "/apple-touch-icon.svg",
-      "sizes": "180x180",
+      "sizes": "256x256",
       "type": "image/svg+xml"
     }
   ]
