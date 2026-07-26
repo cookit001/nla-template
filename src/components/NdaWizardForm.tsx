@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { LegalTemplateInputs, LegalDocumentType } from '../types';
-import { FileText, AlertTriangle, ArrowRight, Sparkles, HelpCircle, Shield, Briefcase, FileCode, Layers, Lock } from 'lucide-react';
+import { FileText, AlertTriangle, ArrowRight, Sparkles, HelpCircle, Shield, Briefcase, FileCode, Layers, Lock, Send } from 'lucide-react';
 
 interface Props {
   onSubmitStructured: (inputs: LegalTemplateInputs) => void;
@@ -93,15 +93,15 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
     }
   };
 
-  const inputClass = 'w-full bg-[#0a0d14] dark:bg-[#0a0d14] bg-slate-100 border border-slate-700/60 dark:border-slate-800 rounded-lg px-3 py-2.5 text-sm dark:text-slate-100 text-slate-900 placeholder-slate-500 focus:outline-none focus:border-[#d4af37]/60 focus:ring-1 focus:ring-[#d4af37]/20 transition-colors';
+  const inputClass = 'w-full bg-[#131314] dark:bg-[#131314] bg-slate-100 border border-slate-700/60 dark:border-slate-800 rounded-xl px-3.5 py-2.5 text-sm dark:text-slate-100 text-slate-900 placeholder-slate-500 focus:outline-none focus:border-[#d4af37]/60 focus:ring-1 focus:ring-[#d4af37]/20 transition-colors';
   const labelClass = 'block dark:text-slate-400 text-slate-600 text-[11px] font-medium uppercase tracking-wider mb-1.5';
 
   return (
-    <div className="bg-[#0c1019] dark:bg-[#0c1019] bg-white border border-slate-800/60 dark:border-slate-800/60 border-slate-200 rounded-xl p-4 sm:p-5 space-y-4 shadow-sm">
+    <div className="bg-[#1e1f20] dark:bg-[#1e1f20] bg-white border border-slate-800/60 dark:border-slate-800/60 border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4 shadow-md">
 
       {/* Error / Objection Banner */}
       {objection && (
-        <div className="bg-red-950/60 border border-red-900/60 rounded-lg p-3 text-red-300 text-xs flex items-start gap-2">
+        <div className="bg-red-950/60 border border-red-900/60 rounded-xl p-3 text-red-300 text-xs flex items-start gap-2">
           <AlertTriangle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
           <span>{objection}</span>
         </div>
@@ -109,14 +109,14 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
 
       {/* Mode Switcher Tabs */}
       <div className="flex items-center justify-between border-b border-slate-800/60 pb-2">
-        <div className="flex border-b border-transparent">
+        <div className="flex space-x-2">
           <button
             type="button"
             onClick={() => setTab('structured')}
-            className={`flex items-center gap-1.5 pb-2 px-1 mr-4 text-xs font-semibold transition-colors border-b-2 ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
               tab === 'structured'
-                ? 'text-[#d4af37] border-[#d4af37]'
-                : 'text-slate-500 border-transparent hover:text-slate-300'
+                ? 'bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40'
+                : 'text-slate-400 hover:text-slate-200 border border-transparent'
             }`}
           >
             <FileText className="w-3.5 h-3.5" />
@@ -126,10 +126,10 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           <button
             type="button"
             onClick={() => setTab('ai')}
-            className={`flex items-center gap-1.5 pb-2 px-1 text-xs font-semibold transition-colors border-b-2 ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
               tab === 'ai'
-                ? 'text-[#d4af37] border-[#d4af37]'
-                : 'text-slate-500 border-transparent hover:text-slate-300'
+                ? 'bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40'
+                : 'text-slate-400 hover:text-slate-200 border border-transparent'
             }`}
           >
             <Sparkles className="w-3.5 h-3.5" />
@@ -138,7 +138,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
         </div>
 
         {tab === 'ai' && (
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/10 border border-amber-500/30 text-[#d4af37]">
+          <span className="text-[10px] font-bold px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-[#d4af37]">
             {aiUsesLeft}/3 Daily AI Uses Left
           </span>
         )}
@@ -151,13 +151,13 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           <button
             type="button"
             onClick={() => setDocType('nda')}
-            className={`px-2.5 py-2 rounded-lg text-left text-xs font-semibold border transition-all ${
+            className={`px-3 py-2 rounded-xl text-left text-xs font-semibold border transition-all ${
               docType === 'nda'
-                ? 'bg-[#d4af37]/15 border-[#d4af37] text-[#d4af37]'
-                : 'bg-[#0a0d14] border-slate-800 text-slate-400 hover:text-slate-200'
+                ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
+                : 'bg-[#131314] border-slate-800 text-slate-400 hover:text-slate-200'
             }`}
           >
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-1.5">
               <Lock className="w-3 h-3 text-[#d4af37]" />
               <span>NDA</span>
             </div>
@@ -167,13 +167,13 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           <button
             type="button"
             onClick={() => setDocType('sow')}
-            className={`px-2.5 py-2 rounded-lg text-left text-xs font-semibold border transition-all ${
+            className={`px-3 py-2 rounded-xl text-left text-xs font-semibold border transition-all ${
               docType === 'sow'
-                ? 'bg-[#d4af37]/15 border-[#d4af37] text-[#d4af37]'
-                : 'bg-[#0a0d14] border-slate-800 text-slate-400 hover:text-slate-200'
+                ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
+                : 'bg-[#131314] border-slate-800 text-slate-400 hover:text-slate-200'
             }`}
           >
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-1.5">
               <FileCode className="w-3 h-3 text-[#d4af37]" />
               <span>SOW</span>
             </div>
@@ -183,13 +183,13 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           <button
             type="button"
             onClick={() => setDocType('advisory')}
-            className={`px-2.5 py-2 rounded-lg text-left text-xs font-semibold border transition-all ${
+            className={`px-3 py-2 rounded-xl text-left text-xs font-semibold border transition-all ${
               docType === 'advisory'
-                ? 'bg-[#d4af37]/15 border-[#d4af37] text-[#d4af37]'
-                : 'bg-[#0a0d14] border-slate-800 text-slate-400 hover:text-slate-200'
+                ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
+                : 'bg-[#131314] border-slate-800 text-slate-400 hover:text-slate-200'
             }`}
           >
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-1.5">
               <Shield className="w-3 h-3 text-[#d4af37]" />
               <span>TAGA</span>
             </div>
@@ -199,13 +199,13 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           <button
             type="button"
             onClick={() => setDocType('contractor')}
-            className={`px-2.5 py-2 rounded-lg text-left text-xs font-semibold border transition-all ${
+            className={`px-3 py-2 rounded-xl text-left text-xs font-semibold border transition-all ${
               docType === 'contractor'
-                ? 'bg-[#d4af37]/15 border-[#d4af37] text-[#d4af37]'
-                : 'bg-[#0a0d14] border-slate-800 text-slate-400 hover:text-slate-200'
+                ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
+                : 'bg-[#131314] border-slate-800 text-slate-400 hover:text-slate-200'
             }`}
           >
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-1.5">
               <Briefcase className="w-3 h-3 text-[#d4af37]" />
               <span>ICSA</span>
             </div>
@@ -215,17 +215,17 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           <button
             type="button"
             onClick={() => setDocType('safe')}
-            className={`px-2.5 py-2 rounded-lg text-left text-xs font-semibold border transition-all col-span-2 sm:col-span-1 ${
+            className={`px-3 py-2 rounded-xl text-left text-xs font-semibold border transition-all col-span-2 sm:col-span-1 ${
               docType === 'safe'
-                ? 'bg-[#d4af37]/15 border-[#d4af37] text-[#d4af37]'
-                : 'bg-[#0a0d14] border-slate-800 text-slate-400 hover:text-slate-200'
+                ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
+                : 'bg-[#131314] border-slate-800 text-slate-400 hover:text-slate-200'
             }`}
           >
-            <div className="flex items-center space-x-1">
+            <div className="flex items-center space-x-1.5">
               <Layers className="w-3 h-3 text-[#d4af37]" />
               <span>SAFE-T</span>
             </div>
-            <span className="text-[9px] block text-slate-500 mt-0.5">Future Equity/Token</span>
+            <span className="text-[9px] block text-slate-500 mt-0.5">Future Tokens</span>
           </button>
         </div>
       </div>
@@ -325,7 +325,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-[#d4af37] hover:bg-[#c9a52f] text-[#0a0d14] font-bold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-50 shadow-sm"
+            className="w-full bg-[#d4af37] hover:bg-[#c9a52f] text-[#0a0d14] font-bold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-50 shadow-sm"
           >
             {loading ? (
               <>
@@ -344,13 +344,13 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           </button>
         </form>
       ) : (
-        /* Tab 2: AI Natural Extractor (3 Uses Per Day Limit) */
+        /* Tab 2: Gemini Floating Input Prompt Container */
         <form onSubmit={handleAiSubmit} className="space-y-3.5 pt-1">
-          <div className="bg-[#0a0d14] dark:bg-[#0a0d14] bg-slate-100 border border-slate-700/60 dark:border-slate-800 rounded-lg p-3 text-xs dark:text-slate-400 text-slate-600 leading-relaxed space-y-1">
+          <div className="bg-[#131314] dark:bg-[#131314] bg-slate-100 border border-slate-800 rounded-xl p-3 text-xs dark:text-slate-400 text-slate-600 leading-relaxed space-y-1">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1.5 font-medium dark:text-slate-200 text-slate-800">
                 <HelpCircle className="w-3.5 h-3.5 text-[#d4af37]" />
-                <span>AI Parameter Extractor (3 Uses / Day)</span>
+                <span>Gemini Prompt Extractor (3 Uses / Day)</span>
               </div>
               <span className="text-[10px] font-bold text-[#d4af37]">
                 {aiUsesLeft}/3 Left Today
@@ -368,45 +368,39 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
                 key={idx}
                 type="button"
                 onClick={() => setAiPrompt(preset.prompt)}
-                className="bg-[#0a0d14] border border-slate-800 hover:border-[#d4af37]/40 text-slate-400 hover:text-slate-200 px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors"
+                className="bg-[#131314] border border-slate-800 hover:border-[#d4af37]/40 text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-full text-[11px] font-medium transition-colors"
               >
                 {preset.label}
               </button>
             ))}
           </div>
 
-          <textarea
-            required
-            rows={4}
-            placeholder="Type or paste deal context here (e.g. 'Draft a Statement of Work between PayDirect and OpenBanking for 1 year under UK law')..."
-            value={aiPrompt}
-            onChange={(e) => setAiPrompt(e.target.value)}
-            className={`${inputClass} resize-none leading-relaxed`}
-          />
+          <div className="relative">
+            <textarea
+              required
+              rows={4}
+              placeholder="Describe your deal here (e.g. 'Draft an NDA between Acme and Nexus for 3 years governed by Delaware law')..."
+              value={aiPrompt}
+              onChange={(e) => setAiPrompt(e.target.value)}
+              className={`${inputClass} resize-none leading-relaxed pr-10`}
+            />
 
-          <button
-            type="submit"
-            disabled={loading || !aiPrompt.trim() || aiUsesLeft <= 0}
-            className="w-full bg-[#d4af37] hover:bg-[#c9a52f] text-[#0a0d14] font-bold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-50 shadow-sm"
-          >
-            {loading ? (
-              <>
+            <button
+              type="submit"
+              disabled={loading || !aiPrompt.trim() || aiUsesLeft <= 0}
+              className="absolute bottom-3 right-3 p-2 bg-[#d4af37] hover:bg-[#c9a52f] text-[#0a0d14] rounded-full transition-all disabled:opacity-40 shadow-sm"
+              title="Extract & Draft Document"
+            >
+              {loading ? (
                 <svg className="animate-spin h-4 w-4 text-[#0a0d14]" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                <span>Extracting Parameters...</span>
-              </>
-            ) : aiUsesLeft <= 0 ? (
-              <span>Daily AI Limit Reached (3/3) — Use Form Wizard</span>
-            ) : (
-              <>
-                <Sparkles className="w-4 h-4" />
-                <span>Extract & Draft Document ({aiUsesLeft}/3 Left)</span>
-                <ArrowRight className="w-4 h-4" />
-              </>
-            )}
-          </button>
+              ) : (
+                <Send className="w-4 h-4" />
+              )}
+            </button>
+          </div>
         </form>
       )}
     </div>
