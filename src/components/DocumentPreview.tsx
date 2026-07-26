@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import sdk from '@farcaster/miniapp-sdk';
-import { Copy, Check, RotateCcw, Printer, Share2, Download, ShieldCheck, Award } from 'lucide-react';
+import { Copy, Check, RotateCcw, Printer, Share2, Download } from 'lucide-react';
 import { DisclaimerBanner } from './DisclaimerBanner';
 
 interface Props {
@@ -34,7 +34,7 @@ export function DocumentPreview({ renderedText, onReset }: Props) {
   };
 
   const handleShareToFarcaster = () => {
-    const text = encodeURIComponent("Drafted an immutable, standardized NDA in seconds with NLA & Partners @9realms. In Boilerplate We Trust 📜✨");
+    const text = encodeURIComponent("Drafted a standardized NDA in seconds with NLA & Partners @9realms. In Boilerplate We Trust 📜 $NLA");
     const shareUrl = `https://warpcast.com/~/compose?text=${text}`;
     try {
       sdk.actions.openUrl(shareUrl);
@@ -44,78 +44,63 @@ export function DocumentPreview({ renderedText, onReset }: Props) {
   };
 
   return (
-    <div className="space-y-4 animate-fade-in max-w-full overflow-hidden">
-      {/* Top Action Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2.5 no-print bg-slate-900/90 border border-slate-800 p-3 rounded-xl backdrop-blur-md max-w-full">
+    <div className="space-y-4 max-w-full">
+      {/* Action Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-2 no-print">
         <button
           onClick={onReset}
-          className="flex items-center space-x-1.5 text-xs text-slate-400 hover:text-amber-400 transition duration-200 font-semibold"
+          className="flex items-center gap-1.5 text-xs text-slate-400 hover:text-slate-200 transition-colors font-medium"
         >
           <RotateCcw className="w-3.5 h-3.5" />
           <span>New Document</span>
         </button>
 
         <div className="flex flex-wrap items-center gap-1.5">
-          {/* Farcaster Share Button */}
           <button
             onClick={handleShareToFarcaster}
-            className="flex items-center space-x-1 px-2.5 py-1.5 bg-purple-950/80 hover:bg-purple-900 border border-purple-500/40 text-purple-200 rounded-lg text-xs font-bold transition shadow-sm"
+            className="flex items-center gap-1 px-2.5 py-1.5 bg-purple-950/60 border border-purple-900/60 text-purple-300 rounded-md text-xs font-medium transition-colors hover:bg-purple-900/60"
           >
-            <Share2 className="w-3.5 h-3.5 text-purple-400" />
+            <Share2 className="w-3 h-3" />
             <span>Cast</span>
           </button>
-
-          {/* Copy Button */}
           <button
             onClick={handleCopy}
-            className="flex items-center space-x-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-bold transition border border-slate-700"
+            className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-800/60 border border-slate-700/60 text-slate-300 rounded-md text-xs font-medium transition-colors hover:bg-slate-700/60"
           >
-            {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-            <span>{copied ? 'Copied!' : 'Copy'}</span>
+            {copied ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+            <span>{copied ? 'Copied' : 'Copy'}</span>
           </button>
-
-          {/* Download Button */}
           <button
             onClick={handleDownload}
-            className="flex items-center space-x-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg text-xs font-bold transition border border-slate-700"
+            className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-800/60 border border-slate-700/60 text-slate-300 rounded-md text-xs font-medium transition-colors hover:bg-slate-700/60"
           >
-            <Download className="w-3.5 h-3.5 text-amber-400" />
+            <Download className="w-3 h-3" />
             <span>.TXT</span>
           </button>
-
-          {/* Print Button */}
           <button
             onClick={handlePrint}
-            className="flex items-center space-x-1 px-3 py-1.5 bg-gradient-to-r from-amber-500 to-amber-400 hover:from-amber-400 text-slate-950 rounded-lg text-xs font-extrabold transition shadow-sm"
+            className="flex items-center gap-1 px-3 py-1.5 bg-[#d4af37] text-[#0a0d14] rounded-md text-xs font-bold transition-colors hover:bg-[#c9a52f]"
           >
-            <Printer className="w-3.5 h-3.5" />
+            <Printer className="w-3 h-3" />
             <span>Print</span>
           </button>
         </div>
       </div>
 
-      {/* Document Parchment Card */}
-      <div className="relative bg-slate-950/90 border border-amber-500/30 rounded-2xl p-4 sm:p-8 shadow-2xl space-y-4 max-w-full overflow-hidden">
-        {/* Seal Badge Header */}
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3 no-print max-w-full">
-          <div className="flex items-center space-x-2">
-            <Award className="w-5 h-5 text-amber-400 shrink-0" />
-            <div>
-              <span className="text-[10px] sm:text-xs font-bold text-amber-400 uppercase tracking-widest block">
-                NLA & PARTNERS • OFFICIAL BOILERPLATE
-              </span>
-              <span className="text-[9px] text-slate-500">Deterministically Rendered & Hash Verified</span>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-1 bg-emerald-950/60 border border-emerald-500/30 px-2.5 py-0.5 rounded-full text-emerald-400 text-[10px] font-bold">
-            <ShieldCheck className="w-3 h-3" />
-            <span>HASH VERIFIED</span>
-          </div>
+      {/* Document Card */}
+      <div className="bg-[#0c1019] border border-slate-800/60 rounded-xl p-4 sm:p-6 space-y-3">
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-slate-800/60 pb-3 no-print">
+          <span className="text-[10px] font-bold text-[#d4af37] uppercase tracking-widest" style={{ fontFamily: 'Georgia, serif' }}>
+            NLA & Partners · Mutual NDA
+          </span>
+          <span className="text-[9px] text-emerald-500 bg-emerald-950/40 border border-emerald-900/40 px-2 py-0.5 rounded font-medium">
+            SHA-256 Verified
+          </span>
         </div>
 
-        {/* Formatted Text Box */}
-        <div className="font-mono text-[11px] sm:text-xs text-slate-200 leading-relaxed whitespace-pre-wrap selection:bg-amber-500/30 overflow-x-auto max-w-full">
+        {/* Content */}
+        <div className="font-mono text-[11px] sm:text-xs text-slate-300 leading-relaxed whitespace-pre-wrap selection:bg-amber-500/20 overflow-x-auto">
           {renderedText}
         </div>
       </div>

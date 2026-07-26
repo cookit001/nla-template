@@ -6,12 +6,9 @@ import { NdaInputs, ParseApiResponse } from '../src/types';
 import { NdaWizardForm } from '../src/components/NdaWizardForm';
 import { DocumentPreview } from '../src/components/DocumentPreview';
 import { DisclaimerBanner } from '../src/components/DisclaimerBanner';
-import { ChatInterface } from '../src/components/ChatInterface';
 import { fillNdaTemplate } from '../src/templates/nda';
-import { ShieldCheck, Zap, Lock, Globe, MessageSquare, Sliders } from 'lucide-react';
 
 export default function Home() {
-  const [appMode, setAppMode] = useState<'chat' | 'wizard'>('chat');
   const [renderedText, setRenderedText] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [objection, setObjection] = useState<string | null>(null);
@@ -20,7 +17,7 @@ export default function Home() {
     try {
       sdk.actions.ready();
     } catch (e) {
-      console.log('Farcaster SDK frame container ready notification');
+      // Not inside Farcaster frame — that's fine
     }
   }, []);
 
@@ -39,7 +36,7 @@ export default function Home() {
       if (data.success) {
         setRenderedText(data.renderedText || null);
       } else {
-        setObjection(data.objection || 'OBJECTION! Request falls outside NLA & Partners scope.');
+        setObjection(data.objection || 'This request falls outside the NDA template scope.');
       }
     } catch (err) {
       const text = fillNdaTemplate(inputs);
@@ -64,74 +61,65 @@ export default function Home() {
       if (data.success) {
         setRenderedText(data.renderedText || null);
       } else {
-        setObjection(data.objection || 'OBJECTION! Request falls outside NLA & Partners scope.');
+        setObjection(data.objection || 'This request falls outside the NDA template scope.');
       }
     } catch (err) {
-      setObjection('OBJECTION! Request execution error.');
+      setObjection('Connection error. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="w-full max-w-full flex flex-col space-y-4 my-auto overflow-hidden">
-      {/* Mobile-First Header */}
-      <header className="text-center space-y-3 no-print max-w-full px-2">
-        {/* Status Badge - Explicit Flex Gap to Prevent Merging */}
-        <div className="inline-flex flex-wrap items-center justify-center gap-2 bg-slate-900/90 border border-[#e2b714]/40 px-3.5 py-1.5 rounded-full backdrop-blur-md max-w-full text-center shadow-lg">
-          <span className="relative flex h-2 w-2 shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-          </span>
-          <span className="text-[#e2b714] text-[10px] sm:text-xs font-bold tracking-wider uppercase">
-            NLA & PARTNERS • DETERMINISTIC ENGINE
-          </span>
-          <span className="text-slate-500 font-bold text-[10px] sm:text-xs">•</span>
-          <span className="text-slate-300 text-[10px] sm:text-xs font-semibold tracking-wider">9REALMS STUDIOS</span>
+    <div className="w-full flex flex-col space-y-6 my-auto">
+
+      {/* Firm Identity */}
+      <header className="space-y-4 no-print">
+
+        {/* Seal */}
+        <div className="flex justify-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/seal.svg"
+            alt="NLA & Partners Firm Seal"
+            width={72}
+            height={72}
+            className="opacity-80"
+          />
         </div>
 
-        {/* Main Title */}
-        <h1 className="text-2xl sm:text-4xl font-black text-slate-100 tracking-tight leading-tight">
-          In <span className="gold-gradient-text">Boilerplate</span> We Trust
-        </h1>
-        
-        <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
-          Conversational AI Legal Assistant & Deterministic Generator for Farcaster, Base, X, Mobile App, and Web.
+        {/* Headline */}
+        <div className="text-center space-y-1.5">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-100 tracking-tight" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
+            NLA & Partners
+          </h1>
+          <p className="text-[11px] sm:text-xs text-slate-400 uppercase tracking-[0.25em] font-medium">
+            In Boilerplate We Trust
+          </p>
+        </div>
+
+        {/* Brief explainer */}
+        <p className="text-center text-xs sm:text-sm text-slate-400 max-w-sm mx-auto leading-relaxed">
+          Fill in your deal details below. We will generate a standardized, hash-verified NDA
+          ready to download, print, or share — no account required.
         </p>
 
-        {/* Primary App Mode Switcher */}
-        <div className="flex items-center justify-center p-1 bg-slate-950/90 border border-slate-800 rounded-xl max-w-xs mx-auto shadow-lg">
-          <button
-            onClick={() => setAppMode('chat')}
-            className={`flex-1 flex items-center justify-center space-x-1.5 py-1.5 px-3 rounded-lg text-xs font-bold transition-all ${
-              appMode === 'chat'
-                ? 'bg-gradient-to-r from-[#e2b714]/25 to-amber-600/10 text-[#e2b714] border border-[#e2b714]/40 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <MessageSquare className="w-3.5 h-3.5" />
-            <span>AI Assistant</span>
-          </button>
-
-          <button
-            onClick={() => setAppMode('wizard')}
-            className={`flex-1 flex items-center justify-center space-x-1.5 py-1.5 px-3 rounded-lg text-xs font-bold transition-all ${
-              appMode === 'wizard'
-                ? 'bg-gradient-to-r from-[#e2b714]/25 to-amber-600/10 text-[#e2b714] border border-[#e2b714]/40 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <Sliders className="w-3.5 h-3.5" />
-            <span>Form Wizard</span>
-          </button>
+        {/* Trust markers */}
+        <div className="flex items-center justify-center gap-3 text-[10px] text-slate-500">
+          <span className="flex items-center gap-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
+            SHA-256 Verified
+          </span>
+          <span className="text-slate-700">|</span>
+          <span>7 Jurisdictions</span>
+          <span className="text-slate-700">|</span>
+          <span>$NLA</span>
         </div>
       </header>
 
-      {/* Main Section */}
-      <section className="w-full max-w-full flex-1">
-        {appMode === 'chat' ? (
-          <ChatInterface />
-        ) : renderedText ? (
+      {/* Form / Document Output */}
+      <section className="w-full">
+        {renderedText ? (
           <DocumentPreview renderedText={renderedText} onReset={() => setRenderedText(null)} />
         ) : (
           <div className="space-y-4">
@@ -141,20 +129,17 @@ export default function Home() {
               loading={loading}
               objection={objection}
             />
-            <div className="no-print">
-              <DisclaimerBanner />
-            </div>
+            <DisclaimerBanner />
           </div>
         )}
       </section>
 
       {/* Footer */}
-      <footer className="text-center text-[10px] sm:text-xs text-slate-500 pt-3 no-print space-y-1 border-t border-slate-900/80">
-        <div className="flex items-center justify-center space-x-1.5">
-          <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-          <span className="font-medium text-slate-400">Deterministically Built • SHA256 Hash Verified</span>
+      <footer className="text-center text-[10px] text-slate-600 pt-4 no-print space-y-1 border-t border-slate-900/60">
+        <div>© 2026 9Realms Studios · NLA & Partners</div>
+        <div className="text-slate-700">
+          Farcaster · Base · X · Mobile · Web
         </div>
-        <div>© 2026 9Realms Studios • NLA & Partners • $NLA</div>
       </footer>
     </div>
   );

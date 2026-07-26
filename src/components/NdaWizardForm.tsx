@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { NdaInputs } from '../types';
-import { Sparkles, FileText, AlertOctagon, ArrowRight, Building2, Calendar, Shield, Clock, HelpCircle, Layers } from 'lucide-react';
+import { FileText, AlertTriangle, ArrowRight, Sparkles, HelpCircle } from 'lucide-react';
 
 interface Props {
   onSubmitStructured: (inputs: NdaInputs) => void;
@@ -14,7 +14,6 @@ interface Props {
 export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading, objection }: Props) {
   const [tab, setTab] = useState<'structured' | 'ai'>('structured');
 
-  // Form State
   const [partyA, setPartyA] = useState('');
   const [partyB, setPartyB] = useState('');
   const [effectiveDate, setEffectiveDate] = useState(new Date().toISOString().split('T')[0]);
@@ -22,20 +21,19 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
   const [termYears, setTermYears] = useState(2);
   const [jurisdiction, setJurisdiction] = useState('Delaware, USA');
 
-  // AI Prompt State
   const [aiPrompt, setAiPrompt] = useState('');
 
   const samplePrompts = [
     {
-      label: '🚀 Acme & Nexus M&A',
+      label: 'Acme × Nexus M&A',
       prompt: 'Draft a 3-year NDA between Acme Ventures Ltd and Nexus Tech Corp starting today for M&A discussions under Delaware, USA law.',
     },
     {
-      label: '⚡ Fintech API 2-Yr NDA',
+      label: 'Fintech API Deal',
       prompt: 'Draft a 2-year non-disclosure agreement between PayDirect Ltd and OpenBanking Inc to share API integration docs governed by England & Wales law.',
     },
     {
-      label: '🛡️ Web3 Grant Singapore NDA',
+      label: 'Web3 Grant (SG)',
       prompt: 'Draft a 5-year mutual NDA between 9Realms Studios and Base Ecosystem Fund for strategic grant evaluation under Singapore law.',
     },
   ];
@@ -60,238 +58,206 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
     }
   };
 
+  const inputClass = 'w-full bg-[#0a0d14] border border-slate-800 rounded-lg px-3 py-2.5 text-sm text-slate-100 placeholder-slate-600 focus:outline-none focus:border-[#d4af37]/60 focus:ring-1 focus:ring-[#d4af37]/20 transition-colors';
+  const labelClass = 'block text-slate-400 text-[11px] font-medium uppercase tracking-wider mb-1.5';
+
   return (
-    <div className="glass-panel rounded-2xl p-4 sm:p-6 shadow-2xl border border-slate-800/80 card-pulse-border space-y-4 max-w-full overflow-hidden">
-      {/* Objection Banner */}
+    <div className="bg-[#0c1019] border border-slate-800/60 rounded-xl p-4 sm:p-5 space-y-4">
+
+      {/* Error Banner */}
       {objection && (
-        <div className="bg-red-950/90 border border-red-500/50 rounded-xl p-3.5 text-red-200 text-xs sm:text-sm font-semibold flex items-center space-x-2.5 shadow-lg shadow-red-950/50 animate-pulse">
-          <AlertOctagon className="w-5 h-5 text-red-400 shrink-0" />
+        <div className="bg-red-950/60 border border-red-900/60 rounded-lg p-3 text-red-300 text-xs flex items-start gap-2">
+          <AlertTriangle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
           <span>{objection}</span>
         </div>
       )}
 
-      {/* Mode Navigation Tabs */}
-      <div className="flex items-center bg-slate-950/90 p-1 rounded-xl border border-slate-800/80 w-full">
+      {/* Tab Switcher */}
+      <div className="flex border-b border-slate-800/60">
         <button
           type="button"
           onClick={() => setTab('structured')}
-          className={`flex-1 flex items-center justify-center space-x-1.5 py-2 px-3 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
+          className={`flex items-center gap-1.5 pb-2.5 px-1 mr-4 text-xs font-semibold transition-colors border-b-2 ${
             tab === 'structured'
-              ? 'bg-gradient-to-r from-amber-500/20 to-amber-600/10 text-amber-400 border border-amber-500/40 shadow-sm'
-              : 'text-slate-400 hover:text-slate-200'
+              ? 'text-[#d4af37] border-[#d4af37]'
+              : 'text-slate-500 border-transparent hover:text-slate-300'
           }`}
         >
           <FileText className="w-3.5 h-3.5" />
-          <span>Structured Inputs</span>
+          Structured Inputs
         </button>
 
         <button
           type="button"
           onClick={() => setTab('ai')}
-          className={`flex-1 flex items-center justify-center space-x-1.5 py-2 px-3 rounded-lg text-xs sm:text-sm font-bold transition-all duration-200 ${
+          className={`flex items-center gap-1.5 pb-2.5 px-1 text-xs font-semibold transition-colors border-b-2 ${
             tab === 'ai'
-              ? 'bg-gradient-to-r from-amber-500/20 to-amber-600/10 text-amber-400 border border-amber-500/40 shadow-sm'
-              : 'text-slate-400 hover:text-slate-200'
+              ? 'text-[#d4af37] border-[#d4af37]'
+              : 'text-slate-500 border-transparent hover:text-slate-300'
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-          <span>NLA Natural Extractor</span>
+          <Sparkles className="w-3.5 h-3.5" />
+          Plain English
         </button>
       </div>
 
-      {/* Tab 1: Structured Form Inputs */}
+      {/* Tab 1: Structured Form */}
       {tab === 'structured' ? (
-        <form onSubmit={handleStructuredSubmit} className="space-y-4">
-          {/* Party A & Party B Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+        <form onSubmit={handleStructuredSubmit} className="space-y-3.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-slate-300 text-[11px] font-semibold uppercase tracking-wider mb-1.5 flex items-center space-x-1">
-                <Building2 className="w-3 h-3 text-amber-400" />
-                <span>Disclosing Party (Party A)</span>
-              </label>
+              <label className={labelClass}>Disclosing Party</label>
               <input
                 type="text"
                 required
                 placeholder="e.g. Acme Ventures Ltd."
                 value={partyA}
                 onChange={(e) => setPartyA(e.target.value)}
-                className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-600 focus:outline-none"
+                className={inputClass}
               />
             </div>
-
             <div>
-              <label className="block text-slate-300 text-[11px] font-semibold uppercase tracking-wider mb-1.5 flex items-center space-x-1">
-                <Building2 className="w-3 h-3 text-amber-400" />
-                <span>Receiving Party (Party B)</span>
-              </label>
+              <label className={labelClass}>Receiving Party</label>
               <input
                 type="text"
                 required
                 placeholder="e.g. Nexus Tech Corp."
                 value={partyB}
                 onChange={(e) => setPartyB(e.target.value)}
-                className="w-full glass-input rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-600 focus:outline-none"
+                className={inputClass}
               />
             </div>
           </div>
 
-          {/* Date, Term, Jurisdiction Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div>
-              <label className="block text-slate-300 text-[11px] font-semibold uppercase tracking-wider mb-1.5 flex items-center space-x-1">
-                <Calendar className="w-3 h-3 text-amber-400" />
-                <span>Effective Date</span>
-              </label>
+              <label className={labelClass}>Effective Date</label>
               <input
                 type="date"
                 required
                 value={effectiveDate}
                 onChange={(e) => setEffectiveDate(e.target.value)}
-                className="w-full glass-input rounded-xl px-3 py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none"
+                className={inputClass}
               />
             </div>
-
             <div>
-              <label className="block text-slate-300 text-[11px] font-semibold uppercase tracking-wider mb-1.5 flex items-center space-x-1">
-                <Clock className="w-3 h-3 text-amber-400" />
-                <span>Term Duration</span>
-              </label>
+              <label className={labelClass}>Term</label>
               <select
                 value={termYears}
                 onChange={(e) => setTermYears(Number(e.target.value))}
-                className="w-full glass-input rounded-xl px-3 py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none"
+                className={inputClass}
               >
-                <option value={1} className="bg-slate-900">1 Year</option>
-                <option value={2} className="bg-slate-900">2 Years</option>
-                <option value={3} className="bg-slate-900">3 Years</option>
-                <option value={5} className="bg-slate-900">5 Years</option>
-                <option value={10} className="bg-slate-900">10 Years</option>
+                <option value={1} className="bg-[#0a0d14]">1 Year</option>
+                <option value={2} className="bg-[#0a0d14]">2 Years</option>
+                <option value={3} className="bg-[#0a0d14]">3 Years</option>
+                <option value={5} className="bg-[#0a0d14]">5 Years</option>
+                <option value={10} className="bg-[#0a0d14]">10 Years</option>
               </select>
             </div>
-
             <div>
-              <label className="block text-slate-300 text-[11px] font-semibold uppercase tracking-wider mb-1.5 flex items-center space-x-1">
-                <Shield className="w-3 h-3 text-amber-400" />
-                <span>Jurisdiction</span>
-              </label>
+              <label className={labelClass}>Jurisdiction</label>
               <select
                 value={jurisdiction}
                 onChange={(e) => setJurisdiction(e.target.value)}
-                className="w-full glass-input rounded-xl px-3 py-2.5 text-xs sm:text-sm text-slate-100 focus:outline-none"
+                className={inputClass}
               >
-                <option value="Delaware, USA" className="bg-slate-900">Delaware, USA</option>
-                <option value="England & Wales" className="bg-slate-900">England & Wales (UK)</option>
-                <option value="Singapore" className="bg-slate-900">Singapore</option>
-                <option value="Federal Republic of Nigeria" className="bg-slate-900">Federal Republic of Nigeria</option>
-                <option value="European Union (GDPR)" className="bg-slate-900">European Union (GDPR)</option>
-                <option value="State of California, USA" className="bg-slate-900">California, USA</option>
-                <option value="State of New York, USA" className="bg-slate-900">New York, USA</option>
+                <option value="Delaware, USA" className="bg-[#0a0d14]">Delaware, USA</option>
+                <option value="England & Wales" className="bg-[#0a0d14]">England & Wales</option>
+                <option value="Singapore" className="bg-[#0a0d14]">Singapore</option>
+                <option value="Federal Republic of Nigeria" className="bg-[#0a0d14]">Nigeria</option>
+                <option value="European Union (GDPR)" className="bg-[#0a0d14]">EU (GDPR)</option>
+                <option value="State of California, USA" className="bg-[#0a0d14]">California, USA</option>
+                <option value="State of New York, USA" className="bg-[#0a0d14]">New York, USA</option>
               </select>
             </div>
           </div>
 
-          {/* Purpose of Disclosure */}
           <div>
-            <label className="block text-slate-300 text-[11px] font-semibold uppercase tracking-wider mb-1.5 flex items-center space-x-1">
-              <Layers className="w-3 h-3 text-amber-400" />
-              <span>Purpose of Disclosure</span>
-            </label>
+            <label className={labelClass}>Purpose of Disclosure</label>
             <textarea
               required
               rows={3}
               placeholder="e.g. Evaluating potential strategic partnership, joint product development, and technical integration."
               value={purpose}
               onChange={(e) => setPurpose(e.target.value)}
-              className="w-full glass-input rounded-xl p-3 text-xs sm:text-sm text-slate-100 placeholder-slate-600 focus:outline-none resize-none leading-relaxed"
+              className={`${inputClass} resize-none leading-relaxed`}
             />
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold py-3 px-5 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(245,158,11,0.2)] flex items-center justify-center space-x-2 text-xs sm:text-sm group"
+            className="w-full bg-[#d4af37] hover:bg-[#c9a52f] text-[#0a0d14] font-bold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-50"
           >
             {loading ? (
-              <span className="flex items-center space-x-2">
-                <svg className="animate-spin h-4 w-4 text-slate-950" viewBox="0 0 24 24">
+              <>
+                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                <span>Generating Deterministic Boilerplate...</span>
-              </span>
+                <span>Generating…</span>
+              </>
             ) : (
               <>
-                <span>Generate NDA Draft</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <span>Generate NDA</span>
+                <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>
         </form>
       ) : (
-        /* Tab 2: AI Natural Extractor */
-        <form onSubmit={handleAiSubmit} className="space-y-4">
-          {/* Instructions */}
-          <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 text-xs text-slate-400 leading-relaxed space-y-1">
-            <div className="flex items-center space-x-1.5 text-amber-400 font-semibold">
-              <HelpCircle className="w-3.5 h-3.5" />
-              <span>NLA Natural Language Parameter Extractor</span>
+        /* Tab 2: Plain English */
+        <form onSubmit={handleAiSubmit} className="space-y-3.5">
+          <div className="bg-[#0a0d14] border border-slate-800/60 rounded-lg p-3 text-xs text-slate-400 leading-relaxed space-y-1">
+            <div className="flex items-center gap-1.5 text-slate-300 font-medium">
+              <HelpCircle className="w-3.5 h-3.5 text-slate-500" />
+              <span>How it works</span>
             </div>
             <p>
-              Paste deal details in plain text. NLA Intelligence extracts parameters strictly into the pre-approved NDA template across global jurisdictions.
+              Describe your deal in plain text. The system extracts the key parameters and maps them into the standard NDA template for your chosen jurisdiction.
             </p>
           </div>
 
-          {/* Quick Demo Preset Chips */}
-          <div>
-            <span className="block text-slate-400 text-[10px] font-semibold uppercase tracking-wider mb-1.5">
-              Try Preset Demo Prompts:
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              {samplePrompts.map((preset, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => setAiPrompt(preset.prompt)}
-                  className="bg-slate-950/90 hover:bg-amber-500/10 border border-slate-800 hover:border-amber-500/40 text-slate-300 hover:text-amber-300 px-2.5 py-1 rounded-lg text-[11px] font-medium transition duration-200 text-left"
-                >
-                  {preset.label}
-                </button>
-              ))}
-            </div>
+          {/* Preset chips */}
+          <div className="flex flex-wrap gap-1.5">
+            {samplePrompts.map((preset, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setAiPrompt(preset.prompt)}
+                className="bg-[#0a0d14] border border-slate-800 hover:border-[#d4af37]/40 text-slate-400 hover:text-slate-200 px-2.5 py-1 rounded-md text-[11px] font-medium transition-colors"
+              >
+                {preset.label}
+              </button>
+            ))}
           </div>
 
-          {/* Textarea */}
-          <div>
-            <textarea
-              required
-              rows={4}
-              placeholder="Type or paste deal context here (e.g. 'Draft an NDA between Acme Ventures Ltd and Nexus Tech Corp starting today for 3 years under Delaware law')..."
-              value={aiPrompt}
-              onChange={(e) => setAiPrompt(e.target.value)}
-              className="w-full glass-input rounded-xl p-3 text-xs sm:text-sm text-slate-100 placeholder-slate-600 focus:outline-none resize-none leading-relaxed"
-            />
-          </div>
+          <textarea
+            required
+            rows={4}
+            placeholder="Type or paste deal context here…"
+            value={aiPrompt}
+            onChange={(e) => setAiPrompt(e.target.value)}
+            className={`${inputClass} resize-none leading-relaxed`}
+          />
 
-          {/* Submit Button */}
           <button
             type="submit"
             disabled={loading || !aiPrompt.trim()}
-            className="w-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-500 hover:from-amber-400 hover:to-amber-300 text-slate-950 font-bold py-3 px-5 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(245,158,11,0.2)] flex items-center justify-center space-x-2 text-xs sm:text-sm group disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full bg-[#d4af37] hover:bg-[#c9a52f] text-[#0a0d14] font-bold py-2.5 px-4 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm disabled:opacity-50"
           >
             {loading ? (
-              <span className="flex items-center space-x-2">
-                <svg className="animate-spin h-4 w-4 text-slate-950" viewBox="0 0 24 24">
+              <>
+                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-                <span>Extracting Parameters with NLA AI...</span>
-              </span>
+                <span>Extracting…</span>
+              </>
             ) : (
               <>
-                <Sparkles className="w-4 h-4" />
                 <span>Extract & Draft NDA</span>
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <ArrowRight className="w-4 h-4" />
               </>
             )}
           </button>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#07090E"/>
+  <rect x="20" y="20" width="1160" height="590" rx="16" fill="none" stroke="#D4AF37" stroke-width="2" opacity="0.4"/>
+  <text x="600" y="240" fill="#D4AF37" font-family="Georgia, serif" font-size="72" font-weight="bold" text-anchor="middle" dominant-baseline="middle">NLA &amp; Partners</text>
+  <line x1="350" y1="280" x2="850" y2="280" stroke="#D4AF37" stroke-width="2" opacity="0.6"/>
+  <text x="600" y="340" fill="#E2E8F0" font-family="system-ui, sans-serif" font-size="36" text-anchor="middle" dominant-baseline="middle">In Boilerplate We Trust</text>
+  <text x="600" y="420" fill="#94A3B8" font-family="system-ui, sans-serif" font-size="22" text-anchor="middle" dominant-baseline="middle">Deterministic NDA Generator for Web3 Teams, Startups &amp; Enterprise</text>
+  <text x="600" y="520" fill="#64748B" font-family="monospace" font-size="16" text-anchor="middle" dominant-baseline="middle">Farcaster • Base • X • Mobile • Web — SHA-256 Verified — Multi-Jurisdiction</text>
+  <text x="600" y="560" fill="#475569" font-family="monospace" font-size="13" text-anchor="middle" dominant-baseline="middle">9Realms Studios • $NLA</text>
+</svg>

@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 
@@ -14,30 +14,33 @@ body {
   color: #f1f5f9;
   font-family: var(--font-sans);
   overflow-x: hidden;
-  selection-background-color: #f59e0b;
-  selection-color: #0f172a;
 }
 
-/* Custom Scrollbar */
+::selection {
+  background-color: #d4af37;
+  color: #0f172a;
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 4px;
+  background: #1e293b;
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #f59e0b;
+  background: #334155;
 }
 
-/* Hide Scrollbar Utility */
+/* Hide scrollbar utility */
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -47,81 +50,34 @@ body {
   display: none;
 }
 
-/* Glowing Background Animations */
+/* Ambient glow — very subtle */
 @keyframes ambientGlow {
   0%, 100% {
-    opacity: 0.4;
-    transform: scale(1) translate(0px, 0px);
+    opacity: 0.3;
+    transform: scale(1);
   }
   50% {
-    opacity: 0.7;
-    transform: scale(1.1) translate(15px, -10px);
-  }
-}
-
-@keyframes pulseBorder {
-  0%, 100% {
-    border-color: rgba(226, 183, 20, 0.3);
-    box-shadow: 0 0 15px rgba(226, 183, 20, 0.08);
-  }
-  50% {
-    border-color: rgba(226, 183, 20, 0.6);
-    box-shadow: 0 0 25px rgba(226, 183, 20, 0.18);
+    opacity: 0.5;
+    transform: scale(1.05);
   }
 }
 
 .ambient-glow-amber {
-  animation: ambientGlow 12s ease-in-out infinite;
+  animation: ambientGlow 20s ease-in-out infinite;
 }
 
 .ambient-glow-emerald {
-  animation: ambientGlow 16s ease-in-out infinite reverse;
+  animation: ambientGlow 25s ease-in-out infinite reverse;
 }
 
-.card-pulse-border {
-  animation: pulseBorder 4s ease-in-out infinite;
-}
-
-/* Glassmorphism Classes */
-.glass-panel {
-  background: rgba(15, 23, 42, 0.65);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(226, 183, 20, 0.2);
-}
-
-.glass-card {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.5) 0%, rgba(15, 23, 42, 0.8) 100%);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(226, 183, 20, 0.2);
-}
-
-.glass-input {
-  background: rgba(7, 9, 14, 0.8);
-  border: 1px solid rgba(51, 65, 85, 0.8);
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.glass-input:focus {
-  background: rgba(7, 9, 14, 0.95);
-  border-color: rgba(226, 183, 20, 0.8);
-  box-shadow: 0 0 0 3px rgba(226, 183, 20, 0.15);
-}
-
-/* Gold Gradient Text */
+/* Gold gradient text — used sparingly */
 .gold-gradient-text {
-  background: linear-gradient(135deg, #fef3c7 0%, #e2b714 50%, #d97706 100%);
+  background: linear-gradient(135deg, #fef3c7 0%, #d4af37 50%, #b8942c 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.emerald-gradient-text {
-  background: linear-gradient(135deg, #d1fae5 0%, #10b981 50%, #059669 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
+/* Print */
 @media print {
   body {
     background-color: #ffffff !important;
