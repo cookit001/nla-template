@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const farcasterDomainManifest = {
+  const farcasterManifest = {
     accountAssociation: {
-      header: "",
-      payload: "",
-      signature: ""
+      header: "eyJmaWQiOjMzNDA5NzgsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgwMjNlM0JCMEExNDE3MzJmMTFlMkUxQ2QyZDFjRTFCRjc4Yjg5NTE2In0",
+      payload: "eyJkb21haW4iOiJubGEtdGVtcGxhdGUudmVyY2VsLmFwcCJ9",
+      signature: "e9GUuAqSVqKZUjTTFi/zxrYdt5qkMdoCaEycRfXBcvxzDWA819sl7o1ktc5PYAc7B4kYmjUwAt3l9eZNCzyzzBs="
     },
     frame: {
       version: "1",
@@ -20,7 +20,7 @@ export async function GET() {
     }
   };
 
-  return NextResponse.json(farcasterDomainManifest, {
+  return NextResponse.json(farcasterManifest, {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
