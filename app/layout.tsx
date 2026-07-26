@@ -11,10 +11,13 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://nla-template.vercel.app'),
-  title: 'NLA & Partners — Free NDA Generator | Deterministic Legal Templates',
+  title: 'NLA Templates — Fast Standardized Legal Templates',
   description:
-    'Generate standardized, SHA-256 verified Non-Disclosure Agreements in seconds. Multi-jurisdiction support for Delaware, UK, Singapore, Nigeria, EU & more. Built for web3 teams, startups, and enterprise on Farcaster, Base, X, and the open web.',
+    'Fast, standardized, SHA-256 verified Non-Disclosure Agreements in seconds. Multi-jurisdiction support for Delaware, UK, Singapore, Nigeria, EU & more. Built for web3 teams, startups, and enterprise on Farcaster, Base, X, and the open web.',
   keywords: [
+    'NLA Templates',
+    'legal templates',
+    'standardized legal templates',
     'NDA generator',
     'free NDA template',
     'non-disclosure agreement',
@@ -32,15 +35,13 @@ export const metadata: Metadata = {
     'Base ecosystem',
     'startup NDA',
     'enterprise NDA',
-    'NLA Partners',
     '9Realms Studios',
     '$NLA',
     'deterministic legal',
-    'crypto NDA',
   ],
-  authors: [{ name: '9Realms Studios' }, { name: 'NLA & Partners' }],
+  authors: [{ name: '9Realms Studios' }, { name: 'NLA Templates' }],
   creator: '9Realms Studios',
-  publisher: 'NLA & Partners',
+  publisher: 'NLA Templates',
   robots: {
     index: true,
     follow: true,
@@ -55,24 +56,25 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    siteName: 'NLA & Partners',
-    title: 'NLA & Partners — Free NDA Generator | In Boilerplate We Trust',
+    url: 'https://nla-template.vercel.app',
+    siteName: 'NLA Templates',
+    title: 'NLA Templates — Fast Standardized Legal Templates',
     description:
-      'Generate standardized, SHA-256 verified Non-Disclosure Agreements in seconds. Multi-jurisdiction support for Delaware, UK, Singapore, Nigeria, EU & more.',
+      'Fast, standardized, SHA-256 verified Non-Disclosure Agreements in seconds. Multi-jurisdiction support for Delaware, UK, Singapore, Nigeria, EU & more.',
     images: [
       {
         url: '/og-image.svg',
         width: 1200,
         height: 630,
-        alt: 'NLA & Partners — In Boilerplate We Trust — Deterministic NDA Generator',
+        alt: 'NLA Templates — Fast Standardized Legal Templates',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'NLA & Partners — Free NDA Generator',
+    title: 'NLA Templates — Fast Standardized Legal Templates',
     description:
-      'Generate standardized, SHA-256 verified NDAs in seconds. Multi-jurisdiction. Built for web3 teams, startups & enterprise.',
+      'Fast, standardized, SHA-256 verified NDAs in seconds. Multi-jurisdiction. Built for web3 teams, startups & enterprise.',
     images: ['/og-image.svg'],
     creator: '@9realms',
   },
@@ -88,7 +90,10 @@ export const metadata: Metadata = {
   },
   other: {
     'fc:frame': 'vNext',
-    'fc:frame:image': '/og-image.svg',
+    'fc:frame:image': 'https://nla-template.vercel.app/og-image.svg',
+    'fc:frame:button:1': 'Open NLA Templates',
+    'fc:frame:button:1:action': 'link',
+    'fc:frame:button:1:target': 'https://nla-template.vercel.app',
   },
 };
 
@@ -104,7 +109,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
       </head>
       <body className="min-h-screen bg-[#07090e] text-slate-100 antialiased selection:bg-amber-500 selection:text-slate-950 flex flex-col items-center justify-start relative overflow-x-hidden w-full">
-        {/* Ambient Background — Subtle, Not Overdone */}
+        {/* Ambient Background */}
         <div className="fixed top-[-15%] left-[40%] w-[300px] sm:w-[500px] h-[250px] bg-[#e2b714]/[0.06] blur-[120px] rounded-full pointer-events-none ambient-glow-amber z-0" />
         <div className="fixed bottom-[-15%] right-[-5%] w-[250px] sm:w-[400px] h-[300px] bg-emerald-500/[0.04] blur-[140px] rounded-full pointer-events-none ambient-glow-emerald z-0" />
         

@@ -34,7 +34,7 @@ export function DocumentPreview({ renderedText, onReset }: Props) {
   };
 
   const handleShareToFarcaster = () => {
-    const text = encodeURIComponent("Drafted a standardized NDA in seconds with NLA & Partners @9realms. In Boilerplate We Trust 📜 $NLA");
+    const text = encodeURIComponent("Drafted a standardized NDA in seconds with NLA Templates @9realms. In Boilerplate We Trust 📜 $NLA");
     const shareUrl = `https://warpcast.com/~/compose?text=${text}`;
     try {
       sdk.actions.openUrl(shareUrl);
@@ -92,7 +92,7 @@ export function DocumentPreview({ renderedText, onReset }: Props) {
         {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-800/60 pb-3 no-print">
           <span className="text-[10px] font-bold text-[#d4af37] uppercase tracking-widest" style={{ fontFamily: 'Georgia, serif' }}>
-            NLA & Partners · Mutual NDA
+            NLA Templates · Mutual NDA
           </span>
           <span className="text-[9px] text-emerald-500 bg-emerald-950/40 border border-emerald-900/40 px-2 py-0.5 rounded font-medium">
             SHA-256 Verified

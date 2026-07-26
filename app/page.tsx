@@ -17,7 +17,7 @@ export default function Home() {
     try {
       sdk.actions.ready();
     } catch (e) {
-      // Not inside Farcaster frame — that's fine
+      // Not inside Farcaster client container — normal web browser fallback
     }
   }, []);
 
@@ -72,16 +72,14 @@ export default function Home() {
 
   return (
     <div className="w-full flex flex-col space-y-6 my-auto">
-
-      {/* Firm Identity */}
+      {/* App Identity */}
       <header className="space-y-4 no-print">
-
         {/* Seal */}
         <div className="flex justify-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/seal.svg"
-            alt="NLA & Partners Firm Seal"
+            alt="NLA Templates Firm Seal"
             width={72}
             height={72}
             className="opacity-80"
@@ -91,7 +89,7 @@ export default function Home() {
         {/* Headline */}
         <div className="text-center space-y-1.5">
           <h1 className="text-xl sm:text-2xl font-bold text-slate-100 tracking-tight" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-            NLA & Partners
+            NLA Templates
           </h1>
           <p className="text-[11px] sm:text-xs text-slate-400 uppercase tracking-[0.25em] font-medium">
             In Boilerplate We Trust
@@ -100,8 +98,7 @@ export default function Home() {
 
         {/* Brief explainer */}
         <p className="text-center text-xs sm:text-sm text-slate-400 max-w-sm mx-auto leading-relaxed">
-          Fill in your deal details below. We will generate a standardized, hash-verified NDA
-          ready to download, print, or share — no account required.
+          Fast, standardized, hash-verified legal templates for startups, web3 teams, and enterprise — no account required.
         </p>
 
         {/* Trust markers */}
@@ -136,7 +133,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="text-center text-[10px] text-slate-300 pt-4 no-print space-y-1 border-t border-slate-600/60">
-        <div>© 2026 9Realms Studios · NLA & Partners</div>
+        <div>© 2026 9Realms Studios · NLA Templates</div>
         <div className="text-slate-300">
           Farcaster · Base · X · Mobile · Web
         </div>

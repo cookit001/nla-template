@@ -1,7 +1,7 @@
 {
-  "name": "NLA & Partners",
-  "short_name": "NLA",
-  "description": "Deterministic NDA Generator — In Boilerplate We Trust. Multi-jurisdiction, SHA-256 verified legal templates for web3 teams, startups, and enterprise.",
+  "name": "NLA Templates",
+  "short_name": "NLA Templates",
+  "description": "Fast, standardized legal templates — deterministic, multi-jurisdiction, SHA-256 verified NDA generator for startups, web3 teams, and enterprise.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#07090E",
