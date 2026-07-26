@@ -12,6 +12,7 @@
     "imageUrl": "https://nla-template.vercel.app/og-image.svg",
     "buttonTitle": "Open NLA Templates",
     "splashImageUrl": "https://nla-template.vercel.app/apple-touch-icon.svg",
-    "splashBackgroundColor": "#07090e"
+    "splashBackgroundColor": "#07090e",
+    "webhookUrl": "https://nla-template.vercel.app/api/webhook"
   }
 }

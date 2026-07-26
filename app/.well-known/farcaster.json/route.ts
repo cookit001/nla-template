@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const farcasterManifest = {
+  const farcasterDomainManifest = {
     accountAssociation: {
       header: "",
       payload: "",
@@ -15,11 +15,12 @@ export async function GET() {
       imageUrl: "https://nla-template.vercel.app/og-image.svg",
       buttonTitle: "Open NLA Templates",
       splashImageUrl: "https://nla-template.vercel.app/apple-touch-icon.svg",
-      splashBackgroundColor: "#07090e"
+      splashBackgroundColor: "#07090e",
+      webhookUrl: "https://nla-template.vercel.app/api/webhook"
     }
   };
 
-  return NextResponse.json(farcasterManifest, {
+  return NextResponse.json(farcasterDomainManifest, {
     headers: {
       'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json',
