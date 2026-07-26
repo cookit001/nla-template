@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import sdk from '@farcaster/miniapp-sdk';
-import { Copy, Check, RotateCcw, Printer, Share2, Download, ShieldCheck, Sparkles } from 'lucide-react';
+import { Copy, Check, RotateCcw, Printer, Share2, Download } from 'lucide-react';
 import { DisclaimerBanner } from './DisclaimerBanner';
+import { Sparkles2DIcon, Shield2DIcon } from './HandcraftedIcons';
 
 interface Props {
   renderedText: string;
@@ -103,14 +104,14 @@ export function DocumentPreview({ renderedText, onReset }: Props) {
         {/* Header Metadata */}
         <div className="flex items-center justify-between border-b border-slate-800/60 pb-3 no-print">
           <div className="flex items-center space-x-2">
-            <Sparkles className="w-4 h-4 text-[#d4af37]" />
+            <Sparkles2DIcon className="w-4 h-4 text-[#d4af37]" />
             <span className="text-[11px] font-bold text-[#d4af37] uppercase tracking-widest" style={{ fontFamily: 'Georgia, serif' }}>
               NLA Templates · Legal Document Output
             </span>
           </div>
 
           <span className="text-[9px] text-emerald-500 bg-emerald-950/40 border border-emerald-900/40 px-2.5 py-0.5 rounded-full font-semibold tracking-wider uppercase flex items-center gap-1">
-            <ShieldCheck className="w-3 h-3" />
+            <Shield2DIcon className="w-3.5 h-3.5 text-emerald-500" />
             <span>SHA-256 Verified</span>
           </span>
         </div>

@@ -2,18 +2,24 @@
 
 import React, { useState, useEffect } from 'react';
 import sdk from '@farcaster/miniapp-sdk';
-import { LegalTemplateInputs, ParseApiResponse } from '../src/types';
+import { LegalTemplateInputs, ParseApiResponse, LegalDocumentType } from '../src/types';
 import { NdaWizardForm } from '../src/components/NdaWizardForm';
 import { DocumentPreview } from '../src/components/DocumentPreview';
 import { DisclaimerBanner } from '../src/components/DisclaimerBanner';
+import { GeminiSidebar } from '../src/components/GeminiSidebar';
 import { fillNdaTemplate } from '../src/templates/nda';
-import { Sun, Moon, Sparkles, ShieldCheck } from 'lucide-react';
+import { Seal2DIcon, Menu2DIcon, Sparkles2DIcon } from '../src/components/HandcraftedIcons';
 
 export default function Home() {
   const [renderedText, setRenderedText] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [objection, setObjection] = useState<string | null>(null);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [activeDocType, setActiveDocType] = useState<LegalDocumentType>('nda');
+  const [forceTosOpen, setForceTosOpen] = useState(false);
 
   useEffect(() => {
     try {
@@ -90,90 +96,87 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full flex flex-col space-y-5 my-auto min-h-screen justify-between py-2">
-      {/* Top Bar Navigation */}
-      <header className="space-y-3 no-print">
-        <div className="flex items-center justify-between border-b border-slate-800/40 pb-3">
-          <div className="flex items-center space-x-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/seal.svg"
-              alt="NLA Templates Seal"
-              width={32}
-              height={32}
-              className="drop-shadow-sm"
-            />
-            <span className="text-sm font-bold tracking-tight dark:text-slate-100 text-slate-900" style={{ fontFamily: 'Georgia, serif' }}>
-              NLA Templates
-            </span>
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/30 text-[#d4af37]">
-              Engine v2.5
-            </span>
-          </div>
+    <div className="flex min-h-screen w-full bg-[#131314] text-slate-100 font-sans">
+      {/* Google Gemini Left Sidebar */}
+      <GeminiSidebar
+        collapsed={sidebarCollapsed}
+        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
+        mobileOpen={mobileSidebarOpen}
+        onCloseMobile={() => setMobileSidebarOpen(false)}
+        activeDocType={activeDocType}
+        onSelectDocType={(type) => setActiveDocType(type)}
+        onNewDocument={() => setRenderedText(null)}
+        onOpenTos={() => setForceTosOpen(true)}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
 
-          <button
-            onClick={toggleTheme}
-            className="p-1.5 rounded-full bg-slate-800/40 hover:bg-slate-700/60 dark:text-slate-300 text-slate-700 transition-colors flex items-center gap-1 text-[11px] font-semibold border border-slate-700/40"
-            title="Toggle Light / Dark Mode"
-          >
-            {theme === 'dark' ? (
-              <>
-                <Sun className="w-3.5 h-3.5 text-amber-400" />
-                <span className="hidden sm:inline">Light</span>
-              </>
-            ) : (
-              <>
-                <Moon className="w-3.5 h-3.5 text-slate-600" />
-                <span className="hidden sm:inline">Dark</span>
-              </>
-            )}
-          </button>
-        </div>
+      {/* Main Workspace Canvas */}
+      <div className="flex-1 flex flex-col min-h-screen overflow-x-hidden">
+        {/* Top Navbar */}
+        <header className="sticky top-0 z-20 bg-[#131314]/90 backdrop-blur-md border-b border-slate-800/60 px-4 py-3 flex items-center justify-between no-print">
+          <div className="flex items-center space-x-3">
+            <button
+              onClick={() => setMobileSidebarOpen(true)}
+              className="sm:hidden p-1.5 rounded-lg text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-colors"
+            >
+              <Menu2DIcon className="w-5 h-5" />
+            </button>
 
-        {/* Gemini Hero Greeting (Only shown before document is generated) */}
-        {!renderedText && (
-          <div className="text-center pt-2 space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#1e1f20] border border-slate-800 text-[11px] font-medium text-[#d4af37]">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>In Boilerplate We Trust</span>
+            <div className="flex items-center space-x-2">
+              <Seal2DIcon className="w-6 h-6" />
+              <span className="text-sm font-bold tracking-tight text-slate-100" style={{ fontFamily: 'Georgia, serif' }}>
+                NLA Templates
+              </span>
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#d4af37]/15 border border-[#d4af37]/30 text-[#d4af37]">
+                Gemini v2.5 Engine
+              </span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-100">
-              What legal agreement can I help you draft?
-            </h1>
-            <p className="text-xs text-slate-400 max-w-sm mx-auto">
-              Select a verified template below or describe your deal in plain text.
-            </p>
           </div>
-        )}
-      </header>
 
-      {/* Main Workspace (Form / Document Output) */}
-      <section className="w-full flex-1 flex flex-col justify-start space-y-4">
-        {renderedText ? (
-          <DocumentPreview renderedText={renderedText} onReset={() => setRenderedText(null)} />
-        ) : (
-          <div className="space-y-4">
-            <NdaWizardForm
-              onSubmitStructured={handleStructuredSubmit}
-              onSubmitNaturalText={handleNaturalTextSubmit}
-              loading={loading}
-              objection={objection}
-            />
-            <DisclaimerBanner />
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setRenderedText(null)}
+              className="text-xs font-semibold text-slate-400 hover:text-slate-200 px-3 py-1.5 rounded-full bg-[#1e1f20] border border-slate-800 transition-colors"
+            >
+              Reset Canvas
+            </button>
           </div>
-        )}
-      </section>
+        </header>
 
-      {/* Footer */}
-      <footer className="text-center text-[10px] text-slate-500 pt-3 no-print space-y-1 border-t border-slate-800/40">
-        <div className="flex items-center justify-center gap-2">
-          <ShieldCheck className="w-3 h-3 text-emerald-500" />
-          <span>© 2026 9Realms Studios · NLA Templates</span>
-        </div>
-        <div className="text-slate-600">
-          Farcaster · Base · X · Mobile · Web
-        </div>
-      </footer>
+        {/* Main Content Body */}
+        <main className="flex-1 w-full max-w-4xl mx-auto p-4 sm:p-6 space-y-5">
+          {!renderedText && (
+            <div className="text-center pt-2 space-y-1.5 no-print">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#1e1f20] border border-slate-800 text-[11px] font-medium text-[#d4af37]">
+                <Sparkles2DIcon className="w-3.5 h-3.5" />
+                <span>In Boilerplate We Trust</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-100">
+                What legal document can I help you draft today?
+              </h1>
+              <p className="text-xs text-slate-400 max-w-md mx-auto">
+                Select a verified template from the Gemini sidebar or fill in deal parameters below.
+              </p>
+            </div>
+          )}
+
+          {renderedText ? (
+            <DocumentPreview renderedText={renderedText} onReset={() => setRenderedText(null)} />
+          ) : (
+            <div className="space-y-4">
+              <NdaWizardForm
+                onSubmitStructured={handleStructuredSubmit}
+                onSubmitNaturalText={handleNaturalTextSubmit}
+                loading={loading}
+                objection={objection}
+                initialDocType={activeDocType}
+              />
+              <DisclaimerBanner forceOpen={forceTosOpen} onClose={() => setForceTosOpen(false)} />
+            </div>
+          )}
+        </main>
+      </div>
     </div>
   );
 }

@@ -2,18 +2,34 @@
 
 import React, { useState, useEffect } from 'react';
 import { LegalTemplateInputs, LegalDocumentType } from '../types';
-import { FileText, AlertTriangle, ArrowRight, Sparkles, HelpCircle, Shield, Briefcase, FileCode, Layers, Lock, Send } from 'lucide-react';
+import {
+  Quill2DIcon,
+  Code2DIcon,
+  Shield2DIcon,
+  Document2DIcon,
+  Layers2DIcon,
+  Sparkles2DIcon,
+  Send2DIcon,
+} from './HandcraftedIcons';
+import { FileText, AlertTriangle, ArrowRight, HelpCircle } from 'lucide-react';
 
 interface Props {
   onSubmitStructured: (inputs: LegalTemplateInputs) => void;
   onSubmitNaturalText: (prompt: string) => void;
   loading: boolean;
   objection: string | null;
+  initialDocType?: LegalDocumentType;
 }
 
-export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading, objection }: Props) {
+export function NdaWizardForm({
+  onSubmitStructured,
+  onSubmitNaturalText,
+  loading,
+  objection,
+  initialDocType = 'nda',
+}: Props) {
   const [tab, setTab] = useState<'structured' | 'ai'>('structured');
-  const [docType, setDocType] = useState<LegalDocumentType>('nda');
+  const [docType, setDocType] = useState<LegalDocumentType>(initialDocType);
 
   const [partyA, setPartyA] = useState('');
   const [partyB, setPartyB] = useState('');
@@ -24,6 +40,12 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
 
   const [aiPrompt, setAiPrompt] = useState('');
   const [aiUsesLeft, setAiUsesLeft] = useState<number>(3);
+
+  useEffect(() => {
+    if (initialDocType) {
+      setDocType(initialDocType);
+    }
+  }, [initialDocType]);
 
   useEffect(() => {
     const todayKey = `nla_ai_uses_${new Date().toISOString().split('T')[0]}`;
@@ -113,7 +135,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           <button
             type="button"
             onClick={() => setTab('structured')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
               tab === 'structured'
                 ? 'bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40'
                 : 'text-slate-400 hover:text-slate-200 border border-transparent'
@@ -126,13 +148,13 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
           <button
             type="button"
             onClick={() => setTab('ai')}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all ${
               tab === 'ai'
                 ? 'bg-[#d4af37]/20 text-[#d4af37] border border-[#d4af37]/40'
                 : 'text-slate-400 hover:text-slate-200 border border-transparent'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5" />
+            <Sparkles2DIcon className="w-3.5 h-3.5" />
             <span>AI Natural Extractor</span>
           </button>
         </div>
@@ -158,7 +180,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
             }`}
           >
             <div className="flex items-center space-x-1.5">
-              <Lock className="w-3 h-3 text-[#d4af37]" />
+              <Quill2DIcon className="w-3.5 h-3.5" />
               <span>NDA</span>
             </div>
             <span className="text-[9px] block text-slate-500 mt-0.5">Non-Disclosure</span>
@@ -174,7 +196,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
             }`}
           >
             <div className="flex items-center space-x-1.5">
-              <FileCode className="w-3 h-3 text-[#d4af37]" />
+              <Code2DIcon className="w-3.5 h-3.5" />
               <span>SOW</span>
             </div>
             <span className="text-[9px] block text-slate-500 mt-0.5">Statement of Work</span>
@@ -190,7 +212,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
             }`}
           >
             <div className="flex items-center space-x-1.5">
-              <Shield className="w-3 h-3 text-[#d4af37]" />
+              <Shield2DIcon className="w-3.5 h-3.5" />
               <span>TAGA</span>
             </div>
             <span className="text-[9px] block text-slate-500 mt-0.5">Web3 Advisory</span>
@@ -206,7 +228,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
             }`}
           >
             <div className="flex items-center space-x-1.5">
-              <Briefcase className="w-3 h-3 text-[#d4af37]" />
+              <Document2DIcon className="w-3.5 h-3.5" />
               <span>ICSA</span>
             </div>
             <span className="text-[9px] block text-slate-500 mt-0.5">Contractor Deal</span>
@@ -222,7 +244,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
             }`}
           >
             <div className="flex items-center space-x-1.5">
-              <Layers className="w-3 h-3 text-[#d4af37]" />
+              <Layers2DIcon className="w-3.5 h-3.5" />
               <span>SAFE-T</span>
             </div>
             <span className="text-[9px] block text-slate-500 mt-0.5">Future Tokens</span>
@@ -388,7 +410,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
             <button
               type="submit"
               disabled={loading || !aiPrompt.trim() || aiUsesLeft <= 0}
-              className="absolute bottom-3 right-3 p-2 bg-[#d4af37] hover:bg-[#c9a52f] text-[#0a0d14] rounded-full transition-all disabled:opacity-40 shadow-sm"
+              className="absolute bottom-3 right-3 p-2.5 bg-[#d4af37] hover:bg-[#c9a52f] text-[#0a0d14] rounded-full transition-all disabled:opacity-40 shadow-sm"
               title="Extract & Draft Document"
             >
               {loading ? (
@@ -397,7 +419,7 @@ export function NdaWizardForm({ onSubmitStructured, onSubmitNaturalText, loading
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
               ) : (
-                <Send className="w-4 h-4" />
+                <Send2DIcon className="w-4 h-4 text-[#0a0d14]" />
               )}
             </button>
           </div>
