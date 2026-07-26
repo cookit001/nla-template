@@ -74,20 +74,20 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full max-w-full flex flex-col space-y-5 my-auto overflow-hidden">
+    <div className="w-full max-w-full flex flex-col space-y-4 my-auto overflow-hidden">
       {/* Mobile-First Header */}
       <header className="text-center space-y-3 no-print max-w-full px-2">
-        {/* Status Badge */}
-        <div className="inline-flex flex-wrap items-center justify-center gap-1.5 bg-slate-900/90 border border-amber-500/30 px-3 py-1 rounded-full backdrop-blur-md max-w-full text-center">
+        {/* Status Badge - Explicit Flex Gap to Prevent Merging */}
+        <div className="inline-flex flex-wrap items-center justify-center gap-2 bg-slate-900/90 border border-[#e2b714]/40 px-3.5 py-1.5 rounded-full backdrop-blur-md max-w-full text-center shadow-lg">
           <span className="relative flex h-2 w-2 shrink-0">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
           </span>
-          <span className="text-amber-400 text-[10px] sm:text-xs font-bold tracking-widest uppercase">
+          <span className="text-[#e2b714] text-[10px] sm:text-xs font-bold tracking-wider uppercase">
             NLA & PARTNERS • DETERMINISTIC ENGINE
           </span>
-          <span className="text-slate-600 hidden sm:inline">•</span>
-          <span className="text-slate-400 text-[10px] sm:text-xs font-semibold">9REALMS STUDIOS</span>
+          <span className="text-slate-500 font-bold text-[10px] sm:text-xs">•</span>
+          <span className="text-slate-300 text-[10px] sm:text-xs font-semibold tracking-wider">9REALMS STUDIOS</span>
         </div>
 
         {/* Main Title */}
@@ -105,7 +105,7 @@ export default function Home() {
             onClick={() => setAppMode('chat')}
             className={`flex-1 flex items-center justify-center space-x-1.5 py-1.5 px-3 rounded-lg text-xs font-bold transition-all ${
               appMode === 'chat'
-                ? 'bg-gradient-to-r from-amber-500/25 to-amber-600/10 text-amber-400 border border-amber-500/40 shadow-sm'
+                ? 'bg-gradient-to-r from-[#e2b714]/25 to-amber-600/10 text-[#e2b714] border border-[#e2b714]/40 shadow-sm'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -117,7 +117,7 @@ export default function Home() {
             onClick={() => setAppMode('wizard')}
             className={`flex-1 flex items-center justify-center space-x-1.5 py-1.5 px-3 rounded-lg text-xs font-bold transition-all ${
               appMode === 'wizard'
-                ? 'bg-gradient-to-r from-amber-500/25 to-amber-600/10 text-amber-400 border border-amber-500/40 shadow-sm'
+                ? 'bg-gradient-to-r from-[#e2b714]/25 to-amber-600/10 text-[#e2b714] border border-[#e2b714]/40 shadow-sm'
                 : 'text-slate-400 hover:text-slate-200'
             }`}
           >
@@ -128,7 +128,7 @@ export default function Home() {
       </header>
 
       {/* Main Section */}
-      <section className="w-full max-w-full">
+      <section className="w-full max-w-full flex-1">
         {appMode === 'chat' ? (
           <ChatInterface />
         ) : renderedText ? (
@@ -154,7 +154,7 @@ export default function Home() {
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
           <span className="font-medium text-slate-400">Deterministically Built • SHA256 Hash Verified</span>
         </div>
-        <div>© 2026 9Realms Studios • NLA & Partners</div>
+        <div>© 2026 9Realms Studios • NLA & Partners • $NLA</div>
       </footer>
     </div>
   );
