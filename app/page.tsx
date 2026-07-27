@@ -159,23 +159,22 @@ export default function Home() {
             </button>
 
             <div className="flex items-center space-x-2">
-              <Seal2DIcon className="w-6 h-6" />
+              <div className="w-6 h-6 rounded-full bg-[#d4af37]/20 flex items-center justify-center border border-[#d4af37]/40">
+                <span className="text-[10px] font-bold text-[#d4af37]">NLA</span>
+              </div>
               <span className="text-sm font-bold tracking-tight text-slate-100" style={{ fontFamily: 'Georgia, serif' }}>
                 NLA Templates
               </span>
             </div>
           </div>
 
-          <button
-            onClick={() => setPlusMenuOpen(true)}
-            className="text-xs font-bold text-[#d4af37] px-2.5 py-1 rounded-full bg-[#1e1f20] border border-slate-800"
-          >
-            + Attach Tools
-          </button>
+          <span className="text-xs font-bold text-[#d4af37] px-2.5 py-1 rounded-full bg-[#1e1f20] border border-slate-800">
+            $NLA Active
+          </span>
         </header>
 
         {/* 2. Main Chat View (Empty State & Stream) */}
-        <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-32 flex flex-col justify-center">
+        <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-48 flex flex-col justify-center">
           {!renderedText ? (
             /* Empty State: Vertically Centered Title & Stream */
             <div className="text-center my-auto space-y-4 py-12 animate-fadeIn">

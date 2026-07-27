@@ -166,90 +166,12 @@ export function NdaWizardForm({
         )}
       </div>
 
-      {/* Template Selector Grid */}
-      <div>
-        <label className={labelClass}>Select Verified Legal Template (5 Options):</label>
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-1.5">
-          <button
-            type="button"
-            onClick={() => setDocType('nda')}
-            className={`px-3 py-2 rounded-xl text-left text-xs font-semibold border transition-all ${
-              docType === 'nda'
-                ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
-                : 'bg-[#131314] border-slate-800 text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <div className="flex items-center space-x-1.5">
-              <Quill2DIcon className="w-3.5 h-3.5" />
-              <span>NDA</span>
-            </div>
-            <span className="text-[9px] block text-slate-500 mt-0.5">Non-Disclosure</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setDocType('sow')}
-            className={`px-3 py-2 rounded-xl text-left text-xs font-semibold border transition-all ${
-              docType === 'sow'
-                ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
-                : 'bg-[#131314] border-slate-800 text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <div className="flex items-center space-x-1.5">
-              <Code2DIcon className="w-3.5 h-3.5" />
-              <span>SOW</span>
-            </div>
-            <span className="text-[9px] block text-slate-500 mt-0.5">Statement of Work</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setDocType('advisory')}
-            className={`px-3 py-2 rounded-xl text-left text-xs font-semibold border transition-all ${
-              docType === 'advisory'
-                ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
-                : 'bg-[#131314] border-slate-800 text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <div className="flex items-center space-x-1.5">
-              <Shield2DIcon className="w-3.5 h-3.5" />
-              <span>TAGA</span>
-            </div>
-            <span className="text-[9px] block text-slate-500 mt-0.5">Web3 Advisory</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setDocType('contractor')}
-            className={`px-3 py-2 rounded-xl text-left text-xs font-semibold border transition-all ${
-              docType === 'contractor'
-                ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
-                : 'bg-[#131314] border-slate-800 text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <div className="flex items-center space-x-1.5">
-              <Document2DIcon className="w-3.5 h-3.5" />
-              <span>ICSA</span>
-            </div>
-            <span className="text-[9px] block text-slate-500 mt-0.5">Contractor Deal</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setDocType('safe')}
-            className={`px-3 py-2 rounded-xl text-left text-xs font-semibold border transition-all col-span-2 sm:col-span-1 ${
-              docType === 'safe'
-                ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
-                : 'bg-[#131314] border-slate-800 text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <div className="flex items-center space-x-1.5">
-              <Layers2DIcon className="w-3.5 h-3.5" />
-              <span>SAFE-T</span>
-            </div>
-            <span className="text-[9px] block text-slate-500 mt-0.5">Future Tokens</span>
-          </button>
-        </div>
+      {/* Active Tool Badge */}
+      <div className="flex items-center mb-1">
+        <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[#d4af37]/10 border border-[#d4af37]/30 text-xs font-semibold text-[#d4af37]">
+          <Sparkles2DIcon className="w-3.5 h-3.5" />
+          Active Tool: {docType === 'nda' ? 'Mutual NDA' : docType === 'sow' ? 'SOW' : docType === 'advisory' ? 'Web3 Advisory' : docType === 'contractor' ? 'Contractor Deal' : docType === 'safe' ? 'SAFE-T' : String(docType).toUpperCase()}
+        </span>
       </div>
 
       {/* Tab 1: Structured Form */}
@@ -359,7 +281,7 @@ export function NdaWizardForm({
               </>
             ) : (
               <>
-                <span>Generate Legal Document ({docType.toUpperCase()})</span>
+                <span>Generate Document ($NLA)</span>
                 <ArrowRight className="w-4 h-4" />
               </>
             )}
