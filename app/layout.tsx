@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Metadata, Viewport } from 'next';
+import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 
 export const viewport: Viewport = {
@@ -68,6 +69,7 @@ export default function RootLayout({
         <div className="w-full min-h-screen flex flex-col z-10 relative">
           {children}
         </div>
+        <Analytics />
       </body>
     </html>
   );
