@@ -191,7 +191,6 @@ export default function Home() {
           onOpenPlusMenu={() => setPlusMenuOpen(true)}
           attachedTool={attachedTool}
           onRemoveTool={() => setAttachedTool(null)}
-          aiUsesLeft={aiUsesLeft}
         />
 
         {/* 4. '+' Attachment Sheet Menu */}
