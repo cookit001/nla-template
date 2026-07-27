@@ -113,7 +113,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ParseApiRespo
       }, { status: 400 });
     }
 
-    const aiResult = await parseNdaRequestFromAi(prompt);
+    const aiResult = await parseNdaRequestFromAi(prompt, body.forceDocumentType);
     if (!aiResult.success || !aiResult.data) {
       logAuditEvent({
         eventType: 'OBJECTION_TRIGGERED',

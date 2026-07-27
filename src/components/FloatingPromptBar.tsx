@@ -5,15 +5,16 @@ import { Send2DIcon } from './HandcraftedIcons';
 import { Plus, Mic } from 'lucide-react';
 import { LegalDocumentType } from '../types';
 
+import { X } from 'lucide-react';
+
 interface Props {
   promptText: string;
   onChangePrompt: (val: string) => void;
   onSubmit: () => void;
   loading: boolean;
   onOpenPlusMenu: () => void;
-  activeDocType: LegalDocumentType;
-  mode: 'structured' | 'ai';
-  aiUsesLeft: number;
+  attachedTool: LegalDocumentType | 'form_wizard' | null;
+  onRemoveTool: () => void;
 }
 
 export function FloatingPromptBar({
@@ -22,9 +23,8 @@ export function FloatingPromptBar({
   onSubmit,
   loading,
   onOpenPlusMenu,
-  activeDocType,
-  mode,
-  aiUsesLeft,
+  attachedTool,
+  onRemoveTool,
 }: Props) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -59,27 +59,38 @@ export function FloatingPromptBar({
             <Plus className="w-4 h-4" />
           </button>
 
-          {/* Active Tool Badge Pill */}
-          <div className="hidden sm:flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#131314] border border-slate-800 text-[10px] font-bold text-[#d4af37] shrink-0 self-center">
-            <span>{activeDocType.toUpperCase()}</span>
-            <span className="text-slate-500">·</span>
-            <span>{mode === 'structured' ? 'Wizard' : `${aiUsesLeft}/3 AI`}</span>
+          {/* Center: Chip + Auto-Expanding Textarea */}
+          <div className="flex-1 flex flex-col justify-end min-h-[44px] py-1">
+            {attachedTool && (
+              <div className="flex items-center mb-1.5 ml-2">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#131314] border border-[#d4af37]/40 text-[11px] font-bold text-[#d4af37] shadow-sm">
+                  <span>{attachedTool === 'form_wizard' ? 'Form Wizard' : attachedTool.toUpperCase()}</span>
+                  <button 
+                    type="button" 
+                    onClick={onRemoveTool}
+                    className="text-slate-400 hover:text-slate-200 ml-1 outline-none"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+              </div>
+            )}
+            <textarea
+              ref={textareaRef}
+              rows={1}
+              value={promptText}
+              onChange={(e) => onChangePrompt(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={
+                attachedTool === 'form_wizard'
+                  ? `Describe deal terms to generate a structured form...`
+                  : attachedTool
+                  ? `Describe deal terms for ${attachedTool.toUpperCase()}...`
+                  : `Describe your deal in plain text (e.g. 'Draft an NDA between Acme & Nexus for 3 yrs in Delaware')...`
+              }
+              className="w-full bg-transparent text-xs sm:text-sm text-slate-100 placeholder-slate-500 border-none outline-none focus:outline-none focus:ring-0 resize-none px-2 max-h-36 leading-relaxed overflow-y-auto"
+            />
           </div>
-
-          {/* Center: Auto-Expanding Textarea */}
-          <textarea
-            ref={textareaRef}
-            rows={1}
-            value={promptText}
-            onChange={(e) => onChangePrompt(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={
-              mode === 'structured'
-                ? `Form Wizard active (${activeDocType.toUpperCase()}) — Type deal overview or tap '+' to configure fields...`
-                : `Describe your deal in plain text (e.g. 'Draft an NDA between Acme & Nexus for 3 yrs in Delaware')...`
-            }
-            className="flex-1 bg-transparent text-xs sm:text-sm text-slate-100 placeholder-slate-500 border-none outline-none focus:outline-none focus:ring-0 resize-none py-2 px-2 max-h-36 leading-relaxed overflow-y-auto"
-          />
 
           {/* Far Right: Microphone & Send Button */}
           <div className="flex items-center gap-1.5 shrink-0">

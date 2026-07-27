@@ -14,14 +14,15 @@ import {
 } from './HandcraftedIcons';
 import { Sun, Moon, ChevronLeft, ChevronRight, X, Sparkles } from 'lucide-react';
 import { LegalDocumentType } from '../types';
+import { SavedDocument } from '../lib/storage';
 
 interface Props {
   collapsed: boolean;
   onToggleCollapse: () => void;
   mobileOpen: boolean;
   onCloseMobile: () => void;
-  activeDocType: LegalDocumentType;
-  onSelectDocType: (type: LegalDocumentType) => void;
+  history: SavedDocument[];
+  onSelectHistoryItem: (doc: SavedDocument) => void;
   onNewDocument: () => void;
   onOpenTos: () => void;
   theme: 'dark' | 'light';
@@ -33,20 +34,13 @@ export function GeminiSidebar({
   onToggleCollapse,
   mobileOpen,
   onCloseMobile,
-  activeDocType,
-  onSelectDocType,
+  history,
+  onSelectHistoryItem,
   onNewDocument,
   onOpenTos,
   theme,
   onToggleTheme,
 }: Props) {
-  const templates: { id: LegalDocumentType; label: string; desc: string; icon: React.ReactNode }[] = [
-    { id: 'nda', label: 'Mutual NDA', desc: 'Non-Disclosure Agreement', icon: <Quill2DIcon className="w-4 h-4" /> },
-    { id: 'sow', label: 'Statement of Work', desc: 'SOW Development Deal', icon: <Code2DIcon className="w-4 h-4" /> },
-    { id: 'advisory', label: 'Web3 Advisory (TAGA)', desc: 'Token Advisory Grant', icon: <Shield2DIcon className="w-4 h-4" /> },
-    { id: 'contractor', label: 'Contractor Deal (ICSA)', desc: 'Services & IP Transfer', icon: <Document2DIcon className="w-4 h-4" /> },
-    { id: 'safe', label: 'SAFE-T Capital', desc: 'Future Equity / Token', icon: <Layers2DIcon className="w-4 h-4" /> },
-  ];
 
   const sidebarContent = (
     <div className="flex flex-col h-full justify-between p-3 select-none">
@@ -99,36 +93,40 @@ export function GeminiSidebar({
           {!collapsed && <span className="text-xs whitespace-nowrap">New Document</span>}
         </button>
 
-        {/* Chat History & Legal Template Catalog */}
+        {/* Chat History */}
         <div className="space-y-1 pt-2">
           {!collapsed && (
             <div className="px-2 pb-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-500 flex items-center justify-between">
-              <span>Chat History & Tools</span>
+              <span>Chat History</span>
               <Clock2DIcon className="w-3 h-3 text-slate-500" />
             </div>
           )}
 
-          {templates.map((tpl) => (
+          {history.length === 0 && !collapsed && (
+            <div className="px-3 py-2 text-xs text-slate-500 italic">
+              No recent documents.
+            </div>
+          )}
+
+          {history.map((doc) => (
             <button
-              key={tpl.id}
+              key={doc.id}
               onClick={() => {
-                onSelectDocType(tpl.id);
+                onSelectHistoryItem(doc);
                 onCloseMobile();
               }}
               className={`w-full flex items-center rounded-xl transition-all ${
                 collapsed ? 'p-2.5 justify-center' : 'px-3 py-2 gap-2.5 text-left'
-              } ${
-                activeDocType === tpl.id
-                  ? 'bg-[#d4af37]/20 border border-[#d4af37]/40 text-[#d4af37]'
-                  : 'hover:bg-slate-800/50 text-slate-300 border border-transparent'
-              }`}
-              title={tpl.label}
+              } hover:bg-slate-800/50 text-slate-300 border border-transparent`}
+              title={doc.title}
             >
-              <div className="shrink-0">{tpl.icon}</div>
+              <div className="shrink-0">
+                <Document2DIcon className="w-4 h-4" />
+              </div>
               {!collapsed && (
                 <div className="truncate">
-                  <div className="text-xs font-semibold truncate">{tpl.label}</div>
-                  <div className="text-[9px] text-slate-500 truncate">{tpl.desc}</div>
+                  <div className="text-xs font-semibold truncate">{doc.title}</div>
+                  <div className="text-[9px] text-slate-500 truncate">{new Date(doc.date).toLocaleDateString()}</div>
                 </div>
               )}
             </button>

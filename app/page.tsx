@@ -3,13 +3,12 @@
 import React, { useState, useEffect } from 'react';
 import sdk from '@farcaster/miniapp-sdk';
 import { LegalTemplateInputs, ParseApiResponse, LegalDocumentType } from '../src/types';
-import { NdaWizardForm } from '../src/components/NdaWizardForm';
 import { DocumentPreview } from '../src/components/DocumentPreview';
 import { DisclaimerBanner } from '../src/components/DisclaimerBanner';
 import { GeminiSidebar } from '../src/components/GeminiSidebar';
 import { FloatingPromptBar } from '../src/components/FloatingPromptBar';
 import { PlusAttachmentSheet } from '../src/components/PlusAttachmentSheet';
-import { fillNdaTemplate } from '../src/templates/nda';
+import { getSavedDocuments, saveDocument, SavedDocument } from '../src/lib/storage';
 import { Seal2DIcon, Menu2DIcon, Sparkles2DIcon } from '../src/components/HandcraftedIcons';
 
 export default function Home() {
@@ -20,13 +19,13 @@ export default function Home() {
 
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const [activeDocType, setActiveDocType] = useState<LegalDocumentType>('nda');
-  const [draftingMode, setDraftingMode] = useState<'structured' | 'ai'>('ai');
+  const [attachedTool, setAttachedTool] = useState<LegalDocumentType | 'form_wizard' | null>(null);
   const [plusMenuOpen, setPlusMenuOpen] = useState(false);
   const [forceTosOpen, setForceTosOpen] = useState(false);
 
   const [promptInput, setPromptInput] = useState('');
   const [aiUsesLeft, setAiUsesLeft] = useState<number>(3);
+  const [history, setHistory] = useState<SavedDocument[]>([]);
 
   useEffect(() => {
     try {
@@ -47,6 +46,8 @@ export default function Home() {
     const todayKey = `nla_ai_uses_${new Date().toISOString().split('T')[0]}`;
     const usedCount = Number(localStorage.getItem(todayKey) || '0');
     setAiUsesLeft(Math.max(0, 3 - usedCount));
+    
+    setHistory(getSavedDocuments());
   }, []);
 
   const toggleTheme = () => {
@@ -55,31 +56,6 @@ export default function Home() {
     localStorage.setItem('nla_theme', nextTheme);
     document.documentElement.classList.remove('dark', 'light');
     document.documentElement.classList.add(nextTheme);
-  };
-
-  const handleStructuredSubmit = async (inputs: LegalTemplateInputs) => {
-    setLoading(true);
-    setObjection(null);
-
-    try {
-      const res = await fetch('/api/parse', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode: 'structured', data: inputs }),
-      });
-      const data: ParseApiResponse = await res.json();
-
-      if (data.success) {
-        setRenderedText(data.renderedText || null);
-      } else {
-        setObjection(data.objection || 'This request falls outside the template scope.');
-      }
-    } catch (err) {
-      const text = fillNdaTemplate(inputs);
-      setRenderedText(text);
-    } finally {
-      setLoading(false);
-    }
   };
 
   const handleNaturalTextSubmit = async (promptText: string) => {
@@ -99,15 +75,25 @@ export default function Home() {
     setAiUsesLeft(Math.max(0, 3 - (usedCount + 1)));
 
     try {
+      const forceDocType = (attachedTool && attachedTool !== 'form_wizard') ? attachedTool : undefined;
       const res = await fetch('/api/parse', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ mode: 'ai', prompt: promptText }),
+        body: JSON.stringify({ mode: 'ai', prompt: promptText, forceDocumentType: forceDocType }),
       });
       const data: ParseApiResponse = await res.json();
 
-      if (data.success) {
-        setRenderedText(data.renderedText || null);
+      if (data.success && data.renderedText && data.data) {
+        setRenderedText(data.renderedText);
+        const newDoc: SavedDocument = {
+          id: Date.now().toString(),
+          title: `${data.data.documentType.toUpperCase()} - ${data.data.partyA} & ${data.data.partyB}`,
+          templateType: data.data.documentType as LegalDocumentType,
+          content: data.renderedText,
+          date: new Date().toISOString()
+        };
+        saveDocument(newDoc);
+        setHistory(getSavedDocuments());
       } else {
         setObjection(data.objection || 'This request falls outside the template scope.');
       }
@@ -119,12 +105,7 @@ export default function Home() {
   };
 
   const handlePromptBarSubmit = () => {
-    if (draftingMode === 'ai') {
-      handleNaturalTextSubmit(promptInput);
-    } else {
-      // In Form Wizard mode, open wizard modal/sheet if fields are needed
-      setPlusMenuOpen(true);
-    }
+    handleNaturalTextSubmit(promptInput);
   };
 
   return (
@@ -135,10 +116,10 @@ export default function Home() {
         onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
         mobileOpen={mobileSidebarOpen}
         onCloseMobile={() => setMobileSidebarOpen(false)}
-        activeDocType={activeDocType}
-        onSelectDocType={(type) => {
-          setActiveDocType(type);
-          setRenderedText(null);
+        history={history}
+        onSelectHistoryItem={(doc) => {
+          setRenderedText(doc.content);
+          setAttachedTool(doc.templateType);
         }}
         onNewDocument={() => setRenderedText(null)}
         onOpenTos={() => setForceTosOpen(true)}
@@ -174,7 +155,7 @@ export default function Home() {
         </header>
 
         {/* 2. Main Chat View (Empty State & Stream) */}
-        <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-48 flex flex-col justify-center">
+        <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-[140px] flex flex-col justify-center">
           {!renderedText ? (
             /* Empty State: Vertically Centered Title & Stream */
             <div className="text-center my-auto space-y-4 py-12 animate-fadeIn">
@@ -188,26 +169,13 @@ export default function Home() {
               </h1>
 
               <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
-                Describe your deal in the prompt bar below or tap <span className="text-[#d4af37] font-bold">+</span> to attach template tools ({activeDocType.toUpperCase()}).
+                Describe your deal in the prompt bar below or tap <span className="text-[#d4af37] font-bold">+</span> to attach template tools.
               </p>
             </div>
           ) : (
             /* Generated Conversational Document Stream */
             <div className="w-full space-y-5 animate-fadeIn pt-2">
               <DocumentPreview renderedText={renderedText} onReset={() => setRenderedText(null)} />
-            </div>
-          )}
-
-          {/* Form Wizard Config Modal when in Form Wizard mode & no document is rendered */}
-          {!renderedText && draftingMode === 'structured' && (
-            <div className="pt-4">
-              <NdaWizardForm
-                onSubmitStructured={handleStructuredSubmit}
-                onSubmitNaturalText={handleNaturalTextSubmit}
-                loading={loading}
-                objection={objection}
-                initialDocType={activeDocType}
-              />
             </div>
           )}
 
@@ -221,8 +189,8 @@ export default function Home() {
           onSubmit={handlePromptBarSubmit}
           loading={loading}
           onOpenPlusMenu={() => setPlusMenuOpen(true)}
-          activeDocType={activeDocType}
-          mode={draftingMode}
+          attachedTool={attachedTool}
+          onRemoveTool={() => setAttachedTool(null)}
           aiUsesLeft={aiUsesLeft}
         />
 
@@ -230,10 +198,8 @@ export default function Home() {
         <PlusAttachmentSheet
           isOpen={plusMenuOpen}
           onClose={() => setPlusMenuOpen(false)}
-          mode={draftingMode}
-          onSelectMode={(m) => setDraftingMode(m)}
-          activeDocType={activeDocType}
-          onSelectDocType={(t) => setActiveDocType(t)}
+          attachedTool={attachedTool}
+          onSelectTool={(t) => setAttachedTool(t)}
         />
       </div>
     </div>

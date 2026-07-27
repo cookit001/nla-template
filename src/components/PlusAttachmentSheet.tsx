@@ -15,19 +15,15 @@ import { FileText, X, Check, Sparkles } from 'lucide-react';
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  mode: 'structured' | 'ai';
-  onSelectMode: (mode: 'structured' | 'ai') => void;
-  activeDocType: LegalDocumentType;
-  onSelectDocType: (type: LegalDocumentType) => void;
+  attachedTool: LegalDocumentType | 'form_wizard' | null;
+  onSelectTool: (tool: LegalDocumentType | 'form_wizard' | null) => void;
 }
 
 export function PlusAttachmentSheet({
   isOpen,
   onClose,
-  mode,
-  onSelectMode,
-  activeDocType,
-  onSelectDocType,
+  attachedTool,
+  onSelectTool,
 }: Props) {
   if (!isOpen) return null;
 
@@ -67,10 +63,11 @@ export function PlusAttachmentSheet({
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => {
-                onSelectMode('structured');
+                onSelectTool('form_wizard');
+                onClose();
               }}
               className={`p-3 rounded-xl border text-left transition-all flex items-center space-x-2.5 ${
-                mode === 'structured'
+                attachedTool === 'form_wizard'
                   ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
                   : 'bg-[#131314] border-slate-800 text-slate-300 hover:border-slate-700'
               }`}
@@ -84,10 +81,11 @@ export function PlusAttachmentSheet({
 
             <button
               onClick={() => {
-                onSelectMode('ai');
+                onSelectTool(null);
+                onClose();
               }}
               className={`p-3 rounded-xl border text-left transition-all flex items-center space-x-2.5 ${
-                mode === 'ai'
+                attachedTool === null
                   ? 'bg-[#d4af37]/20 border-[#d4af37] text-[#d4af37]'
                   : 'bg-[#131314] border-slate-800 text-slate-300 hover:border-slate-700'
               }`}
@@ -111,11 +109,11 @@ export function PlusAttachmentSheet({
               <button
                 key={tool.id}
                 onClick={() => {
-                  onSelectDocType(tool.id);
+                  onSelectTool(tool.id);
                   onClose();
                 }}
                 className={`w-full p-3 rounded-xl border text-left transition-all flex items-center justify-between ${
-                  activeDocType === tool.id
+                  attachedTool === tool.id
                     ? 'bg-[#d4af37]/15 border-[#d4af37] text-[#d4af37]'
                     : 'bg-[#131314] border-slate-800 text-slate-200 hover:border-slate-700'
                 }`}
@@ -130,7 +128,7 @@ export function PlusAttachmentSheet({
                   </div>
                 </div>
 
-                {activeDocType === tool.id && (
+                {attachedTool === tool.id && (
                   <Check className="w-4 h-4 text-[#d4af37] shrink-0" />
                 )}
               </button>

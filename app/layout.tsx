@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
@@ -67,6 +68,7 @@ export default function RootLayout({
         {/* Main Application Shell Container */}
         <div className="w-full min-h-screen flex flex-col z-10 relative">
           {children}
+          <Analytics />
         </div>
       </body>
     </html>

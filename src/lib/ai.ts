@@ -36,7 +36,7 @@ const legalTemplateResponseSchema: ResponseSchema = {
   ],
 };
 
-export async function parseNdaRequestFromAi(userInput: string): Promise<{
+export async function parseNdaRequestFromAi(userInput: string, forceDocumentType?: string): Promise<{
   success: boolean;
   data?: LegalTemplateInputs;
   objection?: string;
@@ -82,6 +82,8 @@ Your sole job:
   5. "safe": SAFE-T (Simple Agreement for Future Tokens/Equity)
 - Return JSON only.
 - Do not provide legal advice or write custom clauses.
+
+${forceDocumentType ? `IMPORTANT: The user has explicitly selected the template type "${forceDocumentType}". You MUST set documentType to "${forceDocumentType}" regardless of the input text, unless it is completely out of scope.` : ''}
 
 Approved fields:
 - documentType: "nda" | "sow" | "advisory" | "contractor" | "safe" (default "nda")
