@@ -14,6 +14,5 @@
     "splashImageUrl": "https://nla.9realmsstudios.name.ng/splash.png",
     "splashBackgroundColor": "#07090e",
     "webhookUrl": "https://nla.9realmsstudios.name.ng/api/webhook"
-  },
-  "appUrl": "https://nla.9realmsstudios.name.ng"
+  }
 }
