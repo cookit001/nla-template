@@ -9,6 +9,12 @@
       <stop offset="50%" stop-color="#D4AF37"/>
       <stop offset="100%" stop-color="#997A15"/>
     </linearGradient>
+
+    <!-- Invisible Arcs for Text Wrapping -->
+    <!-- Top Arc: Left to Right -->
+    <path id="topArc" d="M 46,128 A 82,82 0 0,1 210,128" />
+    <!-- Bottom Arc: Right to Left (Keeps text right-side-up) -->
+    <path id="bottomArc" d="M 210,128 A 82,82 0 0,1 46,128" />
   </defs>
 
   <!-- Outer Ring -->
@@ -19,20 +25,27 @@
   <circle cx="128" cy="128" r="102" fill="none" stroke="url(#goldLinear)" stroke-width="1.5"/>
   <circle cx="128" cy="128" r="98" fill="none" stroke="url(#goldLinear)" stroke-width="0.5" opacity="0.5"/>
 
-  <!-- Curved Header Text Arc Placeholder -->
-  <text x="128" y="56" fill="url(#goldLinear)" font-family="Georgia, serif" font-size="13" font-weight="700" text-anchor="middle" letter-spacing="4">NLA TEMPLATES</text>
+  <!-- Parent Company Top Arc -->
+  <text fill="url(#goldLinear)" font-family="Georgia, serif" font-size="13" font-weight="700" letter-spacing="4">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">9REALMS STUDIOS</textPath>
+  </text>
 
   <!-- Central Legal Diamond & Monogram -->
-  <path d="M128 72 L164 128 L128 184 L92 128 Z" fill="none" stroke="url(#goldLinear)" stroke-width="2"/>
-  <path d="M128 82 L154 128 L128 174 L102 128 Z" fill="none" stroke="url(#goldLinear)" stroke-width="0.75" opacity="0.6"/>
+  <path d="M128 66 L168 128 L128 190 L88 128 Z" fill="none" stroke="url(#goldLinear)" stroke-width="2"/>
+  <path d="M128 78 L156 128 L128 178 L100 128 Z" fill="none" stroke="url(#goldLinear)" stroke-width="0.75" opacity="0.6"/>
 
   <!-- Core Monogram NLA -->
-  <text x="128" y="133" fill="url(#goldLinear)" font-family="Georgia, serif" font-size="22" font-weight="900" text-anchor="middle" letter-spacing="2">NLA</text>
+  <text x="128" y="132" fill="url(#goldLinear)" font-family="Georgia, serif" font-size="28" font-weight="900" text-anchor="middle" letter-spacing="2">NLA</text>
+  
+  <!-- Product Subtitle Inside Diamond -->
+  <text x="128" y="152" fill="url(#goldLinear)" font-family="monospace" font-size="7" font-weight="700" text-anchor="middle" letter-spacing="4">TEMPLATES</text>
 
   <!-- Star Accents -->
-  <path d="M72 128 L76 125 L73 130 L77 131 L72 133 L71 138 L69 133 L64 131 L68 130 L66 125 Z" fill="url(#goldLinear)" opacity="0.8"/>
-  <path d="M184 128 L188 125 L185 130 L189 131 L184 133 L183 138 L181 133 L176 131 L180 130 L178 125 Z" fill="url(#goldLinear)" opacity="0.8"/>
+  <path d="M68 128 L72 125 L69 130 L73 131 L68 133 L67 138 L65 133 L60 131 L64 130 L62 125 Z" fill="url(#goldLinear)" opacity="0.8"/>
+  <path d="M188 128 L192 125 L189 130 L193 131 L188 133 L187 138 L185 133 L180 131 L184 130 L182 125 Z" fill="url(#goldLinear)" opacity="0.8"/>
 
   <!-- Bottom Motto Arc -->
-  <text x="128" y="206" fill="url(#goldLinear)" font-family="monospace" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="3">IN BOILERPLATE WE TRUST</text>
+  <text fill="url(#goldLinear)" font-family="monospace" font-size="10" font-weight="700" letter-spacing="2">
+    <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">IN BOILERPLATE WE TRUST</textPath>
+  </text>
 </svg>
