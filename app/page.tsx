@@ -104,35 +104,6 @@ export default function Home() {
     }
   };
 
-  const appUrl = "https://nla.9realmsstudios.name.ng";
-const frameEmbed = {
-  version: "1",
-  imageUrl: `${appUrl}/og-image.png`,
-  button: {
-    title: "Open NLA Templates",
-    action: {
-      type: "launch_frame",
-      name: "NLA Templates",
-      url: appUrl,
-      splashImageUrl: `${appUrl}/splash.png`,
-      splashBackgroundColor: "#07090e"
-    }
-  }
-};
-
-export const metadata = {
-  title: 'NLA Templates',
-  description: 'In Boilerplate We Trust',
-  openGraph: {
-    title: 'NLA Templates',
-    description: 'Automated legal document drafting.',
-    images: [`${appUrl}/og-image.png`],
-  },
-  other: {
-    "fc:frame": JSON.stringify(frameEmbed),
-  }
-};
-  
   const handlePromptBarSubmit = () => {
     handleNaturalTextSubmit(promptInput);
   };
@@ -232,4 +203,5 @@ export const metadata = {
       </div>
     </div>
   );
-}
+  }
+    
