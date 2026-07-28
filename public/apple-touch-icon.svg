@@ -1,7 +1,52 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
-  <rect width="256" height="256" rx="56" fill="#0B0F17"/>
-  <rect x="10" y="10" width="236" height="236" rx="46" fill="none" stroke="#D4AF37" stroke-width="4"/>
-  <path d="M128 40 L200 128 L128 216 L56 128 Z" fill="none" stroke="#D4AF37" stroke-width="3.5"/>
-  <text x="128" y="120" fill="#FDF6D8" font-family="Georgia, serif" font-size="56" font-weight="900" text-anchor="middle" dominant-baseline="middle">NLA</text>
-  <text x="128" y="172" fill="#D4AF37" font-family="monospace" font-size="14" font-weight="700" text-anchor="middle" dominant-baseline="middle" letter-spacing="4">TEMPLATES</text>
+  <defs>
+    <radialGradient id="sealBg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#1E293B"/>
+      <stop offset="100%" stop-color="#0B0F17"/>
+    </radialGradient>
+    <linearGradient id="goldLinear" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDF6D8"/>
+      <stop offset="50%" stop-color="#D4AF37"/>
+      <stop offset="100%" stop-color="#997A15"/>
+    </linearGradient>
+
+    <!-- Invisible Arcs for Text Wrapping -->
+    <path id="topArc" d="M 46,128 A 82,82 0 0,1 210,128" />
+    <path id="bottomArc" d="M 210,128 A 82,82 0 0,1 46,128" />
+  </defs>
+
+  <!-- Full Canvas Dark Background (Eliminates White Corners) -->
+  <rect width="256" height="256" fill="#131314" />
+
+  <!-- Outer Ring -->
+  <circle cx="128" cy="128" r="118" fill="url(#sealBg)" stroke="url(#goldLinear)" stroke-width="4"/>
+  <circle cx="128" cy="128" r="110" fill="none" stroke="url(#goldLinear)" stroke-width="1" stroke-dasharray="6 3" opacity="0.7"/>
+
+  <!-- Inner Concentric Guilloche Border Rings -->
+  <circle cx="128" cy="128" r="102" fill="none" stroke="url(#goldLinear)" stroke-width="1.5"/>
+  <circle cx="128" cy="128" r="98" fill="none" stroke="url(#goldLinear)" stroke-width="0.5" opacity="0.5"/>
+
+  <!-- Parent Company Top Arc -->
+  <text fill="url(#goldLinear)" font-family="Georgia, serif" font-size="13" font-weight="700" letter-spacing="4">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">9REALMS STUDIOS</textPath>
+  </text>
+
+  <!-- Central Legal Diamond & Monogram -->
+  <path d="M128 66 L168 128 L128 190 L88 128 Z" fill="none" stroke="url(#goldLinear)" stroke-width="2"/>
+  <path d="M128 78 L156 128 L128 178 L100 128 Z" fill="none" stroke="url(#goldLinear)" stroke-width="0.75" opacity="0.6"/>
+
+  <!-- Core Monogram NLA -->
+  <text x="128" y="132" fill="url(#goldLinear)" font-family="Georgia, serif" font-size="28" font-weight="900" text-anchor="middle" letter-spacing="2">NLA</text>
+  
+  <!-- Product Subtitle Inside Diamond -->
+  <text x="128" y="152" fill="url(#goldLinear)" font-family="monospace" font-size="7" font-weight="700" text-anchor="middle" letter-spacing="4">TEMPLATES</text>
+
+  <!-- Star Accents -->
+  <path d="M68 128 L72 125 L69 130 L73 131 L68 133 L67 138 L65 133 L60 131 L64 130 L62 125 Z" fill="url(#goldLinear)" opacity="0.8"/>
+  <path d="M188 128 L192 125 L189 130 L193 131 L188 133 L187 138 L185 133 L180 131 L184 130 L182 125 Z" fill="url(#goldLinear)" opacity="0.8"/>
+
+  <!-- Bottom Motto Arc -->
+  <text fill="url(#goldLinear)" font-family="monospace" font-size="10" font-weight="700" letter-spacing="2">
+    <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">IN BOILERPLATE WE TRUST</textPath>
+  </text>
 </svg>
