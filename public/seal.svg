@@ -11,11 +11,12 @@
     </linearGradient>
 
     <!-- Invisible Arcs for Text Wrapping -->
-    <!-- Top Arc: Left to Right -->
     <path id="topArc" d="M 46,128 A 82,82 0 0,1 210,128" />
-    <!-- Bottom Arc: Right to Left (Keeps text right-side-up) -->
     <path id="bottomArc" d="M 210,128 A 82,82 0 0,1 46,128" />
   </defs>
+
+  <!-- Full Canvas Dark Background (Eliminates White Corners) -->
+  <rect width="256" height="256" fill="#131314" />
 
   <!-- Outer Ring -->
   <circle cx="128" cy="128" r="118" fill="url(#sealBg)" stroke="url(#goldLinear)" stroke-width="4"/>
