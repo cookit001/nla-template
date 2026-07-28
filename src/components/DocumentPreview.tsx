@@ -36,7 +36,7 @@ export function DocumentPreview({ renderedText, onReset }: Props) {
 
   const handleShareToFarcaster = async () => {
     const text = "Drafted a standardized legal agreement in seconds with NLA Templates @9realms. In Boilerplate We Trust 📜 $NLA";
-    const appUrl = "https://nla-template.vercel.app";
+    const appUrl = "https://nla.9realmsstudios.name.ng";
     const shareUrl = `https://warpcast.com/~/compose?text=${encodeURIComponent(text)}&embeds[]=${encodeURIComponent(appUrl)}`;
 
     try {

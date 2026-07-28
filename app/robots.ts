@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://nla-template.vercel.app/sitemap.xml",
+    sitemap: "https://nla.9realmsstudios.name.ng/sitemap.xml",
   };
 }

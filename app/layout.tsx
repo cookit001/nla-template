@@ -11,13 +11,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nla-template.vercel.app'),
+  metadataBase: new URL('https://nla.9realmsstudios.name.ng'),
   title: 'NLA Templates',
   description: 'Fast, standardized legal templates for creators, founders, freelancers, and crypto-native teams.',
   openGraph: {
     title: 'NLA Templates',
     description: 'Fast, standardized legal templates for creators, founders, freelancers, and crypto-native teams.',
-    url: 'https://nla-template.vercel.app',
+    url: 'https://nla.9realmsstudios.name.ng',
     siteName: 'NLA Templates',
     images: ['/image.png'],
     locale: 'en_US',
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   alternates: {
-    canonical: 'https://nla-template.vercel.app',
+    canonical: 'https://nla.9realmsstudios.name.ng',
   },
   other: {
     'base:app_id': '6a656dc7281b6db318994c51',
     'fc:frame': 'vNext',
-    'fc:frame:image': 'https://nla-template.vercel.app/image.png',
-    'fc:frame:post_url': 'https://nla-template.vercel.app/api/frame',
+    'fc:frame:image': 'https://nla.9realmsstudios.name.ng/image.png',
+    'fc:frame:post_url': 'https://nla.9realmsstudios.name.ng/api/frame',
     'fc:frame:button:1': 'Open NLA Templates',
   },
 };

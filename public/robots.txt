@@ -1,6 +1,6 @@
 User-agent: *
 Allow: /
-Sitemap: https://nla-template.vercel.app/sitemap.xml
+Sitemap: https://nla.9realmsstudios.name.ng/sitemap.xml
 
 User-agent: Googlebot
 Allow: /
