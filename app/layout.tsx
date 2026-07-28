@@ -1,8 +1,24 @@
 import React from 'react';
-import { Analytics } from '@vercel/analytics/next';
 import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
+
+const appUrl = "https://nla.9realmsstudios.name.ng";
+
+const frameEmbed = {
+  version: "1",
+  imageUrl: `${appUrl}/og-image.png`,
+  button: {
+    title: "Open NLA Templates",
+    action: {
+      type: "launch_frame",
+      name: "NLA Templates",
+      url: appUrl,
+      splashImageUrl: `${appUrl}/splash.png`,
+      splashBackgroundColor: "#131314"
+    }
+  }
+};
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -12,13 +28,13 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://nla.9realmsstudios.name.ng'),
+  metadataBase: new URL(appUrl),
   title: 'NLA Templates',
   description: 'Fast, standardized legal templates for creators, founders, freelancers, and crypto-native teams.',
   openGraph: {
     title: 'NLA Templates',
     description: 'Fast, standardized legal templates for creators, founders, freelancers, and crypto-native teams.',
-    url: 'https://nla.9realmsstudios.name.ng',
+    url: appUrl,
     siteName: 'NLA Templates',
     images: ['/og-image.png'],
     locale: 'en_US',
@@ -39,14 +55,11 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.json',
   alternates: {
-    canonical: 'https://nla.9realmsstudios.name.ng',
+    canonical: appUrl,
   },
   other: {
     'base:app_id': '6a656dc7281b6db318994c51',
-    'fc:frame': 'vNext',
-    'fc:frame:image': 'https://nla.9realmsstudios.name.ng/og-image.png',
-    'fc:frame:post_url': 'https://nla.9realmsstudios.name.ng/api/frame',
-    'fc:frame:button:1': 'Open NLA Templates',
+    'fc:frame': JSON.stringify(frameEmbed),
   },
 };
 
@@ -69,7 +82,6 @@ export default function RootLayout({
         {/* Main Application Shell Container */}
         <div className="w-full min-h-screen flex flex-col z-10 relative">
           {children}
-          <Analytics />
         </div>
         <Analytics />
       </body>
