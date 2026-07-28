@@ -4,19 +4,19 @@ export async function GET() {
   const farcasterManifest = {
     accountAssociation: {
       header: "eyJmaWQiOjMzNDA5NzgsInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHgwMjNlM0JCMEExNDE3MzJmMTFlMkUxQ2QyZDFjRTFCRjc4Yjg5NTE2In0",
-      payload: "eyJkb21haW4iOiJubGEtdGVtcGxhdGUudmVyY2VsLmFwcCJ9",
-      signature: "e9GUuAqSVqKZUjTTFi/zxrYdt5qkMdoCaEycRfXBcvxzDWA819sl7o1ktc5PYAc7B4kYmjUwAt3l9eZNCzyzzBs="
+      payload: "eyJkb21haW4iOiJubGEuOXJlYWxtc3N0dWRpb3MubmFtZS5uZyJ9",
+      signature: "W5qj1ruluvlPvervV+nXL6gbRsZDVjiobX7tk4RXD5Imqmkm6bbYFcY3MZ1POnl6EwNH9C4FqQkKVfFEKRpekxs="
     },
     frame: {
       version: "1",
       name: "NLA Templates",
-      iconUrl: "https://nla-template.vercel.app/icon.png",
-      homeUrl: "https://nla-template.vercel.app",
-      imageUrl: "https://nla-template.vercel.app/og-image.png",
+      iconUrl: "https://nla.9realmsstudios.name.ng/icon.png",
+      homeUrl: "https://nla.9realmsstudios.name.ng",
+      imageUrl: "https://nla.9realmsstudios.name.ng/og-image.png",
       buttonTitle: "Open NLA Templates",
-      splashImageUrl: "https://nla-template.vercel.app/splash.png",
+      splashImageUrl: "https://nla.9realmsstudios.name.ng/splash.png",
       splashBackgroundColor: "#07090e",
-      webhookUrl: "https://nla-template.vercel.app/api/webhook"
+      webhookUrl: "https://nla.9realmsstudios.name.ng/api/webhook"
     }
   };
 
