@@ -12,24 +12,28 @@ import {
   BrainCircuit,
   FileCheck2,
   Lock,
-  Check
+  Check,
+  Send
 } from 'lucide-react';
 
 export interface CustomerSuccessHelperProps {
   initialOpen?: boolean;
   onComplete?: () => void;
+  onSubmitPrompt?: (prompt: string) => void;
   position?: 'bottom-right' | 'bottom-left';
 }
 
 export function CustomerSuccessHelper({
   initialOpen = false,
   onComplete,
+  onSubmitPrompt,
   position = 'bottom-right'
 }: CustomerSuccessHelperProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
   const [isClient, setIsClient] = useState(false);
+  const [tourPrompt, setTourPrompt] = useState('');
 
   const totalSteps = 4;
 
@@ -45,9 +49,17 @@ export function CustomerSuccessHelper({
     if (currentStep < totalSteps) {
       setCurrentStep((prev) => prev + 1);
     } else {
-      setIsCompleted(true);
-      localStorage.setItem('nla_tour_completed', 'true');
-      if (onComplete) onComplete();
+      finishTour();
+    }
+  };
+
+  const finishTour = () => {
+    setIsCompleted(true);
+    localStorage.setItem('nla_tour_completed', 'true');
+    if (onComplete) onComplete();
+    if (onSubmitPrompt && tourPrompt.trim()) {
+      onSubmitPrompt(tourPrompt.trim());
+      setIsOpen(false);
     }
   };
 
@@ -133,18 +145,43 @@ export function CustomerSuccessHelper({
         );
       case 4:
         return (
-          <div className="space-y-4 animate-fadeIn">
-            <div className="flex items-center gap-3 mb-4">
+          <div className="space-y-5 animate-fadeIn">
+            <div className="flex items-center gap-3 mb-2">
               <div className="p-2.5 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">
                 <Sparkles className="w-6 h-6" />
               </div>
               <div>
-                <h4 className="text-lg font-bold text-slate-100">You're Ready</h4>
-                <p className="text-xs text-slate-400">The workspace is configured.</p>
+                <h4 className="text-lg font-bold text-slate-100">Draft Your First Agreement</h4>
+                <p className="text-xs text-slate-400">Describe the contract you need in plain English.</p>
               </div>
             </div>
-            <div className="bg-amber-500/10 border border-amber-500/20 p-4 rounded-2xl text-sm text-amber-300/90 shadow-[0_0_15px_-3px_rgba(212,175,55,0.1)]">
-              You are fully prepared to generate institution-ready legal templates with NLA IQ.
+            
+            <div className="bg-white/[0.02] border border-white/[0.08] p-4 rounded-2xl shadow-inner focus-within:border-amber-500/50 transition-colors">
+              <textarea
+                value={tourPrompt}
+                onChange={(e) => setTourPrompt(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    if (tourPrompt.trim()) finishTour();
+                  }
+                }}
+                placeholder="e.g. 'I need a standard Mutual Non-Disclosure Agreement for two tech companies discussing a merger...'"
+                className="w-full bg-transparent text-slate-200 text-sm placeholder-slate-500 border-none outline-none resize-none min-h-[80px]"
+                autoFocus
+              />
+            </div>
+            
+            <div className="flex items-center justify-between mt-2">
+              <p className="text-[10px] text-slate-500 font-medium">Press <kbd className="font-mono bg-white/5 px-1 rounded">Enter</kbd> to generate securely</p>
+              <button
+                onClick={() => { if (tourPrompt.trim()) finishTour(); }}
+                disabled={!tourPrompt.trim()}
+                className="px-5 py-2.5 rounded-xl text-xs font-bold text-slate-950 bg-amber-500 hover:bg-amber-400 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(212,175,55,0.2)]"
+              >
+                <span>Generate Template</span>
+                <Send className="w-3.5 h-3.5" />
+              </button>
             </div>
           </div>
         );
@@ -277,7 +314,7 @@ export function CustomerSuccessHelper({
         </div>
 
         {/* Footer Controls */}
-        {!isCompleted && (
+        {!isCompleted && currentStep < totalSteps && (
           <div className="p-5 border-t border-white/[0.05] bg-white/[0.01] flex items-center justify-between">
             <button
               onClick={handleBack}
@@ -304,7 +341,7 @@ export function CustomerSuccessHelper({
                 onClick={handleNext}
                 className="px-6 py-2.5 rounded-xl text-sm font-bold text-slate-950 bg-amber-500 hover:bg-amber-400 transition-all duration-300 flex items-center gap-2 shadow-[0_0_15px_rgba(212,175,55,0.2)] hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] active:scale-95 cursor-pointer hover:-translate-y-0.5"
               >
-                <span>{currentStep === totalSteps ? 'Complete Tour' : 'Next Step'}</span>
+                <span>Next Step</span>
                 <ChevronRight className="w-4 h-4" />
               </button>
             </div>

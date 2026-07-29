@@ -163,7 +163,13 @@ export default function Home() {
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/10 blur-[100px] rounded-full pointer-events-none" />
 
               {/* Interactive Onboarding Product Tour */}
-              <CustomerSuccessHelper initialOpen={true} />
+              <CustomerSuccessHelper 
+                initialOpen={true} 
+                onSubmitPrompt={(prompt) => {
+                  setPromptInput(prompt);
+                  handleNaturalTextSubmit(prompt);
+                }} 
+              />
 
               <div className="text-center space-y-6 pt-4 relative z-10">
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel-amber text-[11px] font-bold text-amber-400 tracking-wide uppercase shadow-lg animate-float">
@@ -186,7 +192,13 @@ export default function Home() {
               <DocumentPreview renderedText={renderedText} onReset={() => setRenderedText(null)} />
               
               {/* Floating button allows user to open guidance even while viewing documents */}
-              <CustomerSuccessHelper initialOpen={false} />
+              <CustomerSuccessHelper 
+                initialOpen={false} 
+                onSubmitPrompt={(prompt) => {
+                  setPromptInput(prompt);
+                  handleNaturalTextSubmit(prompt);
+                }} 
+              />
             </div>
           )}
 
