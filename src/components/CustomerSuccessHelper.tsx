@@ -196,7 +196,7 @@ export function CustomerSuccessHelper({
     return (
       <button
         onClick={handleOpen}
-        className={`fixed bottom-5 ${positionClasses} z-50 bg-[#09090b]/90 backdrop-blur-xl border border-amber-500/30 text-amber-400 hover:text-amber-300 hover:border-amber-500 font-semibold text-xs py-2.5 px-4 rounded-full shadow-2xl transition-all duration-300 flex items-center gap-2 group hover:-translate-y-1 cursor-pointer`}
+        className={`fixed bottom-28 ${positionClasses} z-50 bg-[#09090b]/90 backdrop-blur-xl border border-amber-500/30 text-amber-400 hover:text-amber-300 hover:border-amber-500 font-semibold text-xs py-2.5 px-4 rounded-full shadow-2xl transition-all duration-300 flex items-center gap-2 group hover:-translate-y-1 cursor-pointer`}
         aria-label="Open Workspace Tour"
       >
         <span className="relative flex h-2.5 w-2.5">
