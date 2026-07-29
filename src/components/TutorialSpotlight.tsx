@@ -43,10 +43,7 @@ export function TutorialSpotlight({
 
   useEffect(() => {
     const updateViewport = () => {
-      setViewport({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
+      setViewport({ width: window.innerWidth, height: window.innerHeight });
     };
 
     updateViewport();
@@ -69,20 +66,12 @@ export function TutorialSpotlight({
       let left = Math.min(Math.max(rect.left, 16), vw - cardRect.width - 16);
       let top = rect.top + rect.height + gap;
 
-      if (top + cardRect.height > vh - 16) {
-        top = rect.top - cardRect.height - gap;
-      }
-
+      if (top + cardRect.height > vh - 16) top = rect.top - cardRect.height - gap;
       if (top < 16) top = 16;
       if (left + cardRect.width > vw - 16) left = vw - cardRect.width - 16;
       if (left < 16) left = 16;
 
-      setCardStyle({
-        position: 'fixed',
-        top,
-        left,
-        zIndex: 70,
-      });
+      setCardStyle({ position: 'fixed', top, left, zIndex: 70 });
     };
 
     updateCardPosition();
@@ -97,10 +86,7 @@ export function TutorialSpotlight({
     };
   }, [rect, completed]);
 
-  const maskId = useMemo(
-    () => `tutorial-mask-${Math.random().toString(36).slice(2)}`,
-    []
-  );
+  const maskId = useMemo(() => `tutorial-mask-${Math.random().toString(36).slice(2)}`, []);
 
   if (completed) {
     return (
@@ -140,8 +126,8 @@ export function TutorialSpotlight({
             <rect x="0" y="0" width={viewport.width || 1} height={viewport.height || 1} fill="white" />
             {rect && (
               <>
-                ircle cx={cx} cy={cy} r={holeRadius} fill="black" />
-                ircle cx={cx} cy={cy} r={holeRadius + 10} fill="white" opacity="0.15" />
+                <circle cx={cx} cy={cy} r={holeRadius} fill="black" />
+                <circle cx={cx} cy={cy} r={holeRadius + 10} fill="white" opacity="0.15" />
               </>
             )}
           </mask>
@@ -233,4 +219,4 @@ export function TutorialSpotlight({
       )}
     </div>
   );
-        }
+          }
