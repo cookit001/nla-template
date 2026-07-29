@@ -22,7 +22,7 @@ export function getTutorialState(): TutorialState {
     const parsed = JSON.parse(raw) as Partial<TutorialState>;
     return {
       completed: Boolean(parsed.completed),
-      currentStep: Number(parsed.currentStep) > 0 ? Number(parsed.currentStep) : 1,
+      currentStep: typeof parsed.currentStep === 'number' && parsed.currentStep > 0 ? parsed.currentStep : 1,
       lastSeenAt: typeof parsed.lastSeenAt === 'string' ? parsed.lastSeenAt : '',
     };
   } catch (err) {
