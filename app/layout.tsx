@@ -15,7 +15,7 @@ const frameEmbed = {
       type: "launch_frame",
       name: "NLA Templates",
       url: appUrl,
-      splashImageUrl: `${appUrl}/seal.svg`,
+      splashImageUrl: `${appUrl}/splash.svg`,
       splashBackgroundColor: "#131314"
     }
   }
