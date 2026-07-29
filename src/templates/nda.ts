@@ -27,7 +27,7 @@ PARTIES:
 
 1. PURPOSE OF DISCLOSURE
 The Parties intend to disclose to each other proprietary and confidential information for the sole purpose of:
-"${purpose}" (the "Permitted Purpose").
+${purpose} (the "Permitted Purpose").
 
 2. CONFIDENTIAL INFORMATION
 "Confidential Information" shall include all non-public, confidential, or proprietary information disclosed by one Party ("Disclosing Party") to the other Party ("Receiving Party"), whether orally, visually, or in writing, that is designated as confidential or reasonably ought to be understood as confidential given the nature of the information.
@@ -39,7 +39,7 @@ b) Not to use Confidential Information for any purpose other than the Permitted 
 c) Not to disclose Confidential Information to any third party without prior written authorization from the Disclosing Party.
 
 4. TERM & DURATION
-This Agreement and the confidentiality obligations herein shall remain in effect for a period of ${termYears} (${termYears === 1 ? 'one' : termYears}) year(s) from the Effective Date.
+This Agreement and the confidentiality obligations herein shall remain in effect for a period of ${termYears} from the Effective Date.
 
 5. GOVERNING LAW
 This Agreement shall be governed by and construed in accordance with the laws of ${jurisdiction}, without regard to its conflict of law principles.

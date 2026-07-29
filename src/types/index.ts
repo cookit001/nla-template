@@ -22,6 +22,7 @@ export type ParseApiResponse = {
   success: boolean;
   data?: LegalTemplateInputs;
   renderedText?: string;
+  conversationalMessage?: string;
   objection?: string;
   reason?: string;
   aiGenerationsRemaining?: number;

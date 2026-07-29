@@ -51,7 +51,7 @@ export function DocumentPreview({ renderedText, onReset }: Props) {
   };
 
   return (
-    <div className="space-y-4 max-w-full">
+    <div className="space-y-4 max-w-full pb-36">
       {/* Gemini Action Header */}
       <div className="flex flex-wrap items-center justify-between gap-2 no-print border-b border-slate-800/40 pb-3">
         <button

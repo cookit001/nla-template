@@ -143,6 +143,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ParseApiRespo
       success: true,
       data: aiResult.data,
       renderedText: text,
+      conversationalMessage: aiResult.conversationalMessage,
       aiGenerationsRemaining: rateCheck.remaining,
     });
 
