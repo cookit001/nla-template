@@ -14,7 +14,7 @@ export async function GET() {
       homeUrl: "https://nla.9realmsstudios.name.ng",
       imageUrl: "https://nla.9realmsstudios.name.ng/og-image.png",
       buttonTitle: "Open NLA Templates",
-      splashImageUrl: "https://nla.9realmsstudios.name.ng/splash.png",
+      splashImageUrl: "https://nla.9realmsstudios.name.ng/splash.svg",
       splashBackgroundColor: "#07090e",
       webhookUrl: "https://nla.9realmsstudios.name.ng/api/webhook"
     }
