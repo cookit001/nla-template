@@ -6,9 +6,7 @@ import {
   PlusCircle,
   TerminalSquare,
   Share2,
-  Target,
   ChevronRight,
-  CheckCircle2,
   Sparkles,
   type LucideIcon,
 } from 'lucide-react';
