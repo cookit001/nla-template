@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { LegalTemplateInputSchema, ParseApiResponse } from '../../../src/types';
-import { renderLegalTemplate } from '../../../src/templates';
-import { parseNdaRequestFromAi } from '../../../src/lib/ai';
-import { inspectPromptSafety, REJECTION_OBJECTION_MESSAGE } from '../../../src/lib/guardrails';
-import { logAuditEvent } from '../../../src/lib/logger';
+import { LegalTemplateInputSchema, ParseApiResponse } from '@/types';
+import { renderLegalTemplate } from '@/templates';
+import { parseNdaRequestFromAi } from '@/lib/ai';
+import { inspectPromptSafety, REJECTION_OBJECTION_MESSAGE } from '@/lib/guardrails';
+import { logAuditEvent } from '@/lib/logger';
 
 // In-memory rate limiting tracker: IP -> { count: number, resetTime: number }
 const MAX_AI_DAILY_USES = 3;

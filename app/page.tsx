@@ -2,15 +2,15 @@
 
 import React, { useState, useEffect } from 'react';
 import sdk from '@farcaster/miniapp-sdk';
-import { LegalTemplateInputs, ParseApiResponse, LegalDocumentType } from '../src/types';
-import { DocumentPreview } from '../src/components/DocumentPreview';
-import { DisclaimerBanner } from '../src/components/DisclaimerBanner';
-import { GeminiSidebar } from '../src/components/GeminiSidebar';
-import { FloatingPromptBar } from '../src/components/FloatingPromptBar';
-import { PlusAttachmentSheet } from '../src/components/PlusAttachmentSheet';
-import { CustomerSuccessHelper } from '../src/components/CustomerSuccessHelper';
-import { getSavedDocuments, saveDocument, SavedDocument } from '../src/lib/storage';
-import { Seal2DIcon, Menu2DIcon, Sparkles2DIcon } from '../src/components/HandcraftedIcons';
+import { LegalTemplateInputs, ParseApiResponse, LegalDocumentType } from '@/types';
+import { DocumentPreview } from '@/components/DocumentPreview';
+import { DisclaimerBanner } from '@/components/DisclaimerBanner';
+import { GeminiSidebar } from '@/components/GeminiSidebar';
+import { FloatingPromptBar } from '@/components/FloatingPromptBar';
+import { PlusAttachmentSheet } from '@/components/PlusAttachmentSheet';
+import { CustomerSuccessHelper } from '@/components/CustomerSuccessHelper';
+import { getSavedDocuments, saveDocument, SavedDocument } from '@/lib/storage';
+import { Seal2DIcon, Menu2DIcon, Sparkles2DIcon } from '@/components/HandcraftedIcons';
 
 export default function Home() {
   const [renderedText, setRenderedText] = useState<string | null>(null);
