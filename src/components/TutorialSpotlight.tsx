@@ -87,8 +87,8 @@ export function TutorialSpotlight({
 
   if (completed) {
     return (
-      <div className="fixed inset-0 z-[99999] pointer-events-none bg-black/50">
-        <div className="fixed bottom-16 right-4 pointer-events-auto w-[calc(100%-2rem)] sm:w-80">
+      <div className="fixed inset-0 z-[99999] pointer-events-none bg-black/45">
+        <div className="fixed left-1/2 -translate-x-1/2 bottom-28 sm:bottom-16 pointer-events-auto w-[calc(100%-2rem)] sm:w-80">
           <div className="bg-[#131314] border border-emerald-500/30 rounded-xl shadow-2xl overflow-hidden">
             <div className="p-4 text-center">
               <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto mb-2" />
