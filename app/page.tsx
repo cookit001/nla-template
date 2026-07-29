@@ -158,23 +158,25 @@ export default function Home() {
         {/* 2. Main Chat View (Empty State & Stream) */}
         <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-[140px] flex flex-col justify-center">
           {!renderedText ? (
-            /* Empty State: Onboarding Assistant + Hero Stream */
-            <div className="my-auto space-y-6 py-6 animate-fadeIn">
-              {/* Customer Success Interactive Onboarding Guide */}
+            <div className="my-auto w-full max-w-2xl mx-auto space-y-10 py-10 animate-fadeIn relative">
+              {/* Premium Glow Behind Text */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-amber-500/10 blur-[100px] rounded-full pointer-events-none" />
+
+              {/* Interactive Onboarding Product Tour */}
               <CustomerSuccessHelper initialOpen={true} />
 
-              <div className="text-center space-y-3 pt-2">
-                <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1e1f20] border border-slate-800 text-xs font-semibold text-[#d4af37] shadow-sm">
+              <div className="text-center space-y-6 pt-4 relative z-10">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-panel-amber text-[11px] font-bold text-amber-400 tracking-wide uppercase shadow-lg animate-float">
                   <Sparkles2DIcon className="w-4 h-4" />
-                  <span>In Boilerplate We Trust</span>
+                  <span>Next-Generation Legal Intelligence</span>
                 </div>
 
-                <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-slate-100 leading-tight">
+                <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white via-slate-200 to-slate-500 leading-tight drop-shadow-sm">
                   What legal document can I help you draft today?
                 </h1>
 
-                <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
-                  Describe your deal in the prompt bar below or tap <span className="text-[#d4af37] font-bold">+</span> to attach template tools.
+                <p className="text-sm sm:text-base text-slate-400 max-w-lg mx-auto leading-relaxed font-medium">
+                  Describe your enterprise agreement in the prompt bar below or tap <span className="text-amber-500 font-bold bg-amber-500/10 px-2 py-0.5 rounded-md border border-amber-500/20 shadow-inner">+</span> to attach smart tools.
                 </p>
               </div>
             </div>

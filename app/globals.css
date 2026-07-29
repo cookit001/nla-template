@@ -9,15 +9,15 @@
   --font-mono: 'JetBrains Mono', monospace;
 }
 
-/* Gemini Dark Theme (Default) */
+/* Premium Dark Theme (Deep Zinc) */
 html.dark {
-  background-color: #131314;
-  color: #e3e3e3;
+  background-color: #030303;
+  color: #ededed;
 }
 
 html.dark body {
-  background-color: #131314;
-  color: #e3e3e3;
+  background-color: #030303;
+  color: #ededed;
 }
 
 /* Gemini Light Theme */
@@ -101,7 +101,35 @@ html.light body {
 .gemini-gradient-text {
   background: linear-gradient(135deg, #a8c7fa 0%, #d4af37 50%, #c2e7ff 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+/* Premium Glassmorphism & Effects */
+.glass-panel {
+  background: rgba(9, 9, 11, 0.65);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.glass-panel-amber {
+  background: rgba(9, 9, 11, 0.7);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  box-shadow: 0 0 40px -10px rgba(212, 175, 55, 0.1);
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
 /* Print */

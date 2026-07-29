@@ -46,7 +46,7 @@ function runTests() {
     effectiveDate: "2026-07-25",
     purpose: "Evaluating technical merger opportunities",
     termYears: 3,
-    governingJurisdiction: "Federal Republic of Nigeria",
+    governingJurisdiction: "Global Jurisdiction",
     documentType: "nda"
   });
   assert(validInputs.success === true, "Valid Zod inputs parse successfully");

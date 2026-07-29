@@ -58,7 +58,7 @@ export function GeminiSidebar({
                 <div className="flex items-center space-x-1 mt-0.5">
                   <Sparkles className="w-3 h-3 text-[#d4af37]" />
                   <span className="text-[9px] font-bold uppercase tracking-wider text-[#d4af37]">
-                    Gemini v2.5 Engine
+                    NLA IQ v2.5 Engine
                   </span>
                 </div>
               </div>
@@ -120,13 +120,24 @@ export function GeminiSidebar({
               } hover:bg-slate-800/50 text-slate-300 border border-transparent`}
               title={doc.title}
             >
-              <div className="shrink-0">
-                <Document2DIcon className="w-4 h-4" />
+              <div className="shrink-0 relative">
+                <Document2DIcon className={`w-4 h-4 ${doc.tampered ? 'text-red-500' : ''}`} />
+                {doc.tampered && (
+                  <div className="absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full border border-[#1e1f20]" title="Cryptographic Integrity Compromised" />
+                )}
               </div>
               {!collapsed && (
                 <div className="truncate">
-                  <div className="text-xs font-semibold truncate">{doc.title}</div>
-                  <div className="text-[9px] text-slate-500 truncate">{new Date(doc.date).toLocaleDateString()}</div>
+                  <div className={`text-xs font-semibold truncate ${doc.tampered ? 'text-red-400' : ''}`}>
+                    {doc.title}
+                  </div>
+                  <div className="text-[9px] text-slate-500 truncate flex items-center gap-1">
+                    {doc.tampered ? (
+                      <span className="text-red-500 font-bold bg-red-500/10 px-1 rounded">TAMPERED</span>
+                    ) : (
+                      <span>{new Date(doc.date).toLocaleDateString()}</span>
+                    )}
+                  </div>
                 </div>
               )}
             </button>
@@ -175,7 +186,7 @@ export function GeminiSidebar({
 
   return (
     <>
-      {/* Desktop Collapsible Gemini Sidebar */}
+      {/* Desktop Collapsible NLA IQ Sidebar */}
       <aside
         className={`hidden sm:flex flex-col bg-[#1e1f20] border-r border-slate-800/80 h-screen sticky top-0 transition-all duration-300 z-30 ${
           collapsed ? 'w-16' : 'w-64'

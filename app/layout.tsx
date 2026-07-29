@@ -74,10 +74,10 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.svg" />
       </head>
-      <body className="min-h-screen bg-[#131314] text-slate-100 antialiased selection:bg-amber-500 selection:text-slate-950 flex flex-col items-center justify-start relative overflow-x-hidden w-full">
-        {/* Ambient Gemini Background */}
-        <div className="fixed top-[-15%] left-[40%] w-[300px] sm:w-[500px] h-[250px] bg-[#d4af37]/[0.05] blur-[120px] rounded-full pointer-events-none gemini-aura-blue z-0" />
-        <div className="fixed bottom-[-15%] right-[-5%] w-[250px] sm:w-[400px] h-[300px] bg-[#a8c7fa]/[0.04] blur-[140px] rounded-full pointer-events-none gemini-aura-purple z-0" />
+      <body className="min-h-screen bg-[#030303] text-slate-100 antialiased selection:bg-amber-500 selection:text-slate-950 flex flex-col items-center justify-start relative overflow-x-hidden w-full">
+        {/* Ambient Premium Aura Background */}
+        <div className="fixed top-[-10%] left-[20%] w-[400px] sm:w-[600px] h-[400px] bg-amber-500/[0.04] blur-[150px] rounded-full pointer-events-none gemini-aura-blue z-0" />
+        <div className="fixed bottom-[-20%] right-[-10%] w-[350px] sm:w-[500px] h-[400px] bg-slate-400/[0.03] blur-[160px] rounded-full pointer-events-none gemini-aura-purple z-0" />
         
         {/* Main Application Shell Container */}
         <div className="w-full min-h-screen flex flex-col z-10 relative">

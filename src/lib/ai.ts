@@ -70,7 +70,7 @@ export async function parseNdaRequestFromAi(userInput: string, forceDocumentType
 
   try {
     const model = client.getGenerativeModel({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-2.5-flash-lite',
       generationConfig: {
         responseMimeType: 'application/json',
         responseSchema: legalTemplateResponseSchema,
