@@ -8,6 +8,7 @@ import { DisclaimerBanner } from '../src/components/DisclaimerBanner';
 import { GeminiSidebar } from '../src/components/GeminiSidebar';
 import { FloatingPromptBar } from '../src/components/FloatingPromptBar';
 import { PlusAttachmentSheet } from '../src/components/PlusAttachmentSheet';
+import { CustomerSuccessHelper } from '../src/components/CustomerSuccessHelper';
 import { getSavedDocuments, saveDocument, SavedDocument } from '../src/lib/storage';
 import { Seal2DIcon, Menu2DIcon, Sparkles2DIcon } from '../src/components/HandcraftedIcons';
 
@@ -157,25 +158,33 @@ export default function Home() {
         {/* 2. Main Chat View (Empty State & Stream) */}
         <main className="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 pt-6 pb-[140px] flex flex-col justify-center">
           {!renderedText ? (
-            /* Empty State: Vertically Centered Title & Stream */
-            <div className="text-center my-auto space-y-4 py-12 animate-fadeIn">
-              <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1e1f20] border border-slate-800 text-xs font-semibold text-[#d4af37] shadow-sm">
-                <Sparkles2DIcon className="w-4 h-4" />
-                <span>In Boilerplate We Trust</span>
+            /* Empty State: Onboarding Assistant + Hero Stream */
+            <div className="my-auto space-y-6 py-6 animate-fadeIn">
+              {/* Customer Success Interactive Onboarding Guide */}
+              <CustomerSuccessHelper initialOpen={true} />
+
+              <div className="text-center space-y-3 pt-2">
+                <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#1e1f20] border border-slate-800 text-xs font-semibold text-[#d4af37] shadow-sm">
+                  <Sparkles2DIcon className="w-4 h-4" />
+                  <span>In Boilerplate We Trust</span>
+                </div>
+
+                <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-slate-100 leading-tight">
+                  What legal document can I help you draft today?
+                </h1>
+
+                <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
+                  Describe your deal in the prompt bar below or tap <span className="text-[#d4af37] font-bold">+</span> to attach template tools.
+                </p>
               </div>
-
-              <h1 className="text-2xl sm:text-4xl font-bold tracking-tight text-slate-100 leading-tight">
-                What legal document can I help you draft today?
-              </h1>
-
-              <p className="text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
-                Describe your deal in the prompt bar below or tap <span className="text-[#d4af37] font-bold">+</span> to attach template tools.
-              </p>
             </div>
           ) : (
             /* Generated Conversational Document Stream */
             <div className="w-full space-y-5 animate-fadeIn pt-2">
               <DocumentPreview renderedText={renderedText} onReset={() => setRenderedText(null)} />
+              
+              {/* Floating button allows user to open guidance even while viewing documents */}
+              <CustomerSuccessHelper initialOpen={false} />
             </div>
           )}
 
@@ -203,5 +212,4 @@ export default function Home() {
       </div>
     </div>
   );
-  }
-    
+      }
