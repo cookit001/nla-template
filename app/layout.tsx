@@ -7,7 +7,7 @@ import './globals.css';
 const appUrl = "https://nla.9realmsstudios.name.ng";
 
 const frameEmbed = {
-  version: "1",
+  version: "next",
   iconUrl: `${appUrl}/icon.png`,
   imageUrl: `${appUrl}/og-image.png`,
   button: {
