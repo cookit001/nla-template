@@ -62,6 +62,10 @@ export const metadata: Metadata = {
   other: {
     'base:app_id': '6a656dc7281b6db318994c51',
     'fc:frame': JSON.stringify(frameEmbed),
+    'fc:frame:image': `${appUrl}/og-image.png`,
+    'fc:frame:button:1': 'Open NLA Templates',
+    'fc:frame:button:1:action': 'link',
+    'fc:frame:button:1:target': appUrl,
   },
 };
 
