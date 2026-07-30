@@ -11,7 +11,7 @@
     "homeUrl": "https://nla.9realmsstudios.name.ng",
     "imageUrl": "https://nla.9realmsstudios.name.ng/og-image.png",
     "buttonTitle": "Open NLA Templates",
-    "splashImageUrl": "https://nla.9realmsstudios.name.ng/splash.svg",
+    "splashImageUrl": "https://nla.9realmsstudios.name.ng/splash.png",
     "splashBackgroundColor": "#07090e",
     "webhookUrl": "https://nla.9realmsstudios.name.ng/api/webhook"
   }

@@ -8,6 +8,7 @@ const appUrl = "https://nla.9realmsstudios.name.ng";
 
 const frameEmbed = {
   version: "1",
+  iconUrl: `${appUrl}/icon.png`,
   imageUrl: `${appUrl}/og-image.png`,
   button: {
     title: "Open NLA Templates",
@@ -15,7 +16,7 @@ const frameEmbed = {
       type: "launch_frame",
       name: "NLA Templates",
       url: appUrl,
-      splashImageUrl: `${appUrl}/splash.svg`,
+      splashImageUrl: `${appUrl}/splash.png`,
       splashBackgroundColor: "#131314"
     }
   }
